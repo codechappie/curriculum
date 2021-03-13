@@ -17,7 +17,7 @@ import MusicIcon from "./../../assets/icons/music.svg";
 import userImage from "../../assets/images/user-image.jpg";
 import pdfAngel from '../../assets/pdfs/angel-canales-alcalde-cv.pdf'
 
-import ReactToPdf from "react-to-pdf";
+// import ReactToPdf from "react-to-pdf";
 
 const CurriculumPage = () => {
   const [theme, setTheme] = useState('dark');
