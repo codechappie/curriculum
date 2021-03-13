@@ -1,0 +1,433 @@
+.curriculum-page {
+  width: 100%;
+  background: var(--body-color);
+  color: var(--text-color);
+  margin: 4rem 0;
+}
+.curriculum-page.false {
+  display: none;
+}
+.curriculum-page-container {
+  max-width: 1200px;
+  height: 100%;
+  width: 96%;
+  margin: 0 auto;
+  background: #f3f3f6;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.205);
+  overflow: hidden;
+  border: 1px solid #333;
+}
+.sub-title {
+  padding: 5px 30px;
+}
+.personal-information {
+  display: flex;
+  flex-direction: column;
+  /* padding: 30px; */
+}
+.personal-information .main-profile {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: var(--mb-2);
+  padding: 30px;
+  padding-bottom: 0;
+}
+.personal-information .main-profile .profile-image {
+  max-width: 200px;
+  max-height: 200px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.personal-information .main-profile .profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.personal-information .main-profile .download-button,
+.personal-information .main-profile .theme-button {
+  width: 50px;
+  padding: 10px;
+  cursor: pointer;
+}
+.personal-information .main-profile .download-button img,
+.personal-information .main-profile .theme-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.personal-information .name {
+  margin: 0 auto;
+  width: 100%;
+  /* background: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-semi-bold);
+  text-transform: uppercase;
+  flex-wrap: wrap;
+  word-spacing: normal;
+  word-break: break-word;
+  padding: 0 10px;
+}
+.personal-information .profession {
+  width: 100%;
+  /* background: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 10px;
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-medium);
+  margin-bottom: var(--mb-3);
+}
+
+.personal-information .contact {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: var(--mb-3);
+  padding: 0 30px;
+  padding-top: 10px;
+}
+.personal-information .contact .item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+}
+.personal-information .contact .item img {
+  width: 25px;
+}
+
+.personal-information .social {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: var(--mb-3);
+}
+.personal-information .social .item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 0 30px;
+}
+.personal-information .social .item img {
+  width: 26px;
+}
+
+.personal-information .profile {
+  margin-bottom: var(--mb-4);
+}
+.personal-information .profile p {
+  margin-top: 10px;
+  font-size: var(--normal-font-size);
+  padding: 0 30px;
+}
+
+.personal-information .education .items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* gap: 30px; */
+  margin-top: 10px;
+  padding: 0 30px;
+}
+.personal-information .education .item {
+  display: grid;
+  align-items: flex-start;
+  grid-template-columns: 16px 1fr;
+  gap: 10px;
+  position: relative;
+  padding-bottom: var(--mb-4);
+}
+.personal-information .education .item .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+}
+.personal-information .education .item .content .title {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-medium);
+}
+.personal-information .education .item .content .university {
+  font-size: var(--h3-font-size);
+}
+.personal-information .education .item .dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #9c9c9c;
+  margin-top: 8px;
+  /* position: relative; */
+}
+.personal-information .education .item::before {
+  content: "";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 9px;
+  left: 0.41em;
+  width: 3px;
+  height: 100%;
+  background: #9c9c9c;
+}
+.personal-information .education .item:last-child::before {
+  content: "";
+  height: 0;
+}
+
+.personal-information .skills {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: var(--mb-4);
+}
+
+.personal-information .skills .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  align-items: center;
+  justify-items: flex-start;
+  column-gap: 10px;
+  row-gap: 20px;
+  margin-top: 15px;
+  padding: 0 30px;
+}
+.personal-information .skills .item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.personal-information .skills .dot {
+  width: 8px;
+  height: 8px;
+  background: #6b6b6b;
+  border-radius: 50%;
+}
+.personal-information .skills .item small {
+  font-size: var(--normal-font-size);
+}
+
+.more-details {
+  background: #fff;
+  padding: 30px 0;
+}
+
+.more-details .experience .items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+  padding: 0 30px;
+}
+
+.more-details .experience .items .item {
+  display: grid;
+  align-items: flex-start;
+  justify-content: flex-start;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  position: relative;
+  padding-bottom: 30px;
+}
+.more-details .experience .items .item .content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.more-details .experience .items .item .dot {
+  width: 22px;
+  height: 22px;
+  background: #959595;
+  margin-top: 6px;
+  border-radius: 50%;
+}
+.more-details .experience .items .item .title {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+}
+.more-details .experience .items .item .company {
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-medium);
+}
+.more-details .experience .items .item .date {
+  font-size: var(--small-font-size);
+}
+.more-details .experience .items .item .description {
+  font-size: var(--normal-font-size);
+}
+.more-details .experience .items .item::before {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 100%;
+  background: #959595;
+  top: 8px;
+  left: 0.6em;
+}
+.more-details .experience .items .item:last-child::before {
+  content: "";
+  height: 0;
+}
+
+.more-details .certificates {
+  margin-bottom: var(--mb-4);
+}
+.more-details .certificates .items {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 14px;
+  padding: 0 30px;
+}
+
+.more-details .certificates .items .item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.more-details .certificates .items .item .title {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+}
+
+.more-details .interests .items {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 0 30px;
+}
+
+.more-details .interests .items .item {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #5d5d5d;
+  width: 120px;
+  height: 120px;
+  border-radius: 6px;
+  gap: 10px;
+}
+.more-details .interests .items .item img {
+  width: 32px;
+}
+.more-details .interests .items .item small {
+  text-align: center;
+}
+
+@media screen and (max-width: 1080px) {
+  .curriculum-page,
+  .curriculum-page-container {
+    margin: 0;
+    width: 100%;
+  }
+  .curriculum-page-container {
+    grid-template-columns: 1fr;
+  }
+  .personal-information {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* padding: 0; */
+  }
+  .sub-title {
+    background: #eeeef3;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+  }
+  .more-details {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+  /* .personal-information .main-profile,
+    .personal-information .name,
+    .personal-information .profession,
+    .personal-information .contact{
+        grid-column: 1/3;
+    } */
+}
+@media screen and (max-width: 430px) {
+  .personal-information .main-profile .profile-image {
+    width: 200px;
+    height: 200px;
+  }
+  /* flex-wrap: wrap;
+    word-spacing: normal;
+    word-break: break-word; */
+}
+@media screen and (max-width: 375px) {
+  .personal-information .main-profile .profile-image {
+    width: 130px;
+    height: 130px;
+  }
+  .personal-information .main-profile,
+  .personal-information .contact {
+    padding: 10px;
+    padding-bottom: 0;
+  }
+  .personal-information .social .item,
+  .personal-information .profile p,
+  .personal-information .education .items,
+  .personal-information .skills .items,
+  .more-details .experience .items,
+  .more-details .certificates .items,
+  .more-details .interests .items {
+    padding: 0 10px;
+  }
+}
+
+@media print {
+    .download-button,
+    .theme-button{
+        display: none;
+    }
+    .curriculum-page{
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: red;
+    }
+    .curriculum-page-container {
+        margin: auto;
+        /* margin-top: 80px; */
+        border: 1px solid #333;
+        width: 100%;
+        height: 100%;
+        box-shadow: none;
+    }
+}
+
