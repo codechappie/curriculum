@@ -25,7 +25,9 @@ transition: all .2s ease-in-out;
   overflow: hidden;
 }
 .sub-title {
+  width: 100%;
   padding: 5px 30px;
+  background: var(--page-dark-light);
 }
 .personal-information {
   display: flex;
@@ -369,7 +371,7 @@ transition: all .2s ease-in-out;
     /* padding: 0; */
   }
   .sub-title {
-    background: #eeeef3;
+    /* background: #eeeef3; */
     width: 100%;
     padding: 20px 0;
     text-align: center;
