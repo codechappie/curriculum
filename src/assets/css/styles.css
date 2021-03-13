@@ -1,6 +1,11 @@
+body{
+background-color: var(--body-color);;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23000000' fill-opacity='0.05' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+transition: all .2s ease-in-out;
+}
 .curriculum-page {
   width: 100%;
-  background: var(--body-color);
+  /* background: var(--body-color); */
   color: var(--text-color);
   margin: 4rem 0;
 }
@@ -12,13 +17,12 @@
   height: 100%;
   width: 96%;
   margin: 0 auto;
-  background: #f3f3f6;
+  background: var(--page-color);
   border-radius: 8px;
   display: grid;
   grid-template-columns: 2fr 4fr;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.205);
   overflow: hidden;
-  border: 1px solid #333;
 }
 .sub-title {
   padding: 5px 30px;
@@ -67,6 +71,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: var(--img-filter);
 }
 
 .personal-information .name {
@@ -114,6 +119,7 @@
 }
 .personal-information .contact .item img {
   width: 25px;
+  filter: var(--img-filter);
 }
 
 .personal-information .social {
@@ -131,6 +137,7 @@
 }
 .personal-information .social .item img {
   width: 26px;
+  filter: var(--img-filter);
 }
 
 .personal-information .profile {
@@ -235,7 +242,7 @@
 }
 
 .more-details {
-  background: #fff;
+  background: var(--page-dark-light);
   padding: 30px 0;
 }
 
@@ -333,7 +340,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #5d5d5d;
+  border: 1px solid #858585;
   width: 120px;
   height: 120px;
   border-radius: 6px;
@@ -341,6 +348,7 @@
 }
 .more-details .interests .items .item img {
   width: 32px;
+  filter: var(--img-filter);
 }
 .more-details .interests .items .item small {
   text-align: center;
@@ -376,6 +384,19 @@
     .personal-information .contact{
         grid-column: 1/3;
     } */
+    .personal-information .main-profile{
+      padding: 20px 20px 0 20px;
+    }
+    .personal-information .contact,
+  .personal-information .social .item,
+  .personal-information .profile p,
+  .personal-information .education .items,
+  .personal-information .skills .items,
+  .more-details .experience .items,
+  .more-details .certificates .items,
+  .more-details .interests .items {
+    padding: 0 20px!important;
+  }
 }
 @media screen and (max-width: 430px) {
   .personal-information .main-profile .profile-image {
@@ -408,26 +429,25 @@
 }
 
 @media print {
-    .download-button,
-    .theme-button{
-        display: none;
-    }
-    .curriculum-page{
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: red;
-    }
-    .curriculum-page-container {
-        margin: auto;
-        /* margin-top: 80px; */
-        border: 1px solid #333;
-        width: 100%;
-        height: 100%;
-        box-shadow: none;
-    }
+  .download-button,
+  .theme-button {
+    display: none;
+  }
+  .curriculum-page {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: red;
+  }
+  .curriculum-page-container {
+    margin: auto;
+    /* margin-top: 80px; */
+    border: 1px solid #333;
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+  }
 }
-

@@ -8,7 +8,7 @@ function CurriculumApp() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/curriculum" component={CurriculumPage} />
+          <Route path="/" component={CurriculumPage} />
           <Route path="/print" component={CurriculumPageToPrint} />
         </Switch>
       </Router>

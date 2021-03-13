@@ -14,27 +14,44 @@ import ReadIcon from "./../../assets/icons/read.svg";
 import MoviesIcon from "./../../assets/icons/movies.svg";
 import TravelIcon from "./../../assets/icons/travel.svg";
 import MusicIcon from "./../../assets/icons/music.svg";
-import userImage from '../../assets/images/user-image.jpg'
+import userImage from "../../assets/images/user-image.jpg";
+import pdfAngel from '../../assets/pdfs/angel-canales-alcalde-cv.pdf'
+
 import ReactToPdf from "react-to-pdf";
 
 const CurriculumPage = () => {
-  const ref = React.createRef();
-  const options = {
-    orientation: "p",
-    unit: "px",
-    format: 'a4',
-    floatPrecision: 800,
-    putOnlyUsedFonts:true,
-    compress: true,
-    userUnit: 100.0
+  const [theme, setTheme] = useState('dark');
+  // const ref = React.createRef();
+  // const options = {
+  //   orientation: "p",
+  //   unit: "px",
+  //   format: 'a4',
+  //   floatPrecision: 800,
+  //   putOnlyUsedFonts:true,
+  //   compress: true,
+  //   userUnit: 100.0
+  // };
+
+  const changeTheme = () => {
+    const bodyElement = document.querySelector("#body");
+    if (theme === 'dark') {
+      bodyElement.classList.remove('dark')
+      bodyElement.classList.add('light')
+      setTheme('light');
+    } else {
+      bodyElement.classList.remove('light')
+      bodyElement.classList.add('dark')
+      setTheme('dark');
+    }
+    console.log();
   };
 
   return (
     <div className="curriculum-page">
-      <div className="curriculum-page-container" ref={ref}>
+      <div className="curriculum-page-container">
         <div className="personal-information">
           <div className="main-profile">
-            <ReactToPdf
+            {/* <ReactToPdf
               targetRef={ref}
               filename="div-blue.pdf"
               options={options}
@@ -42,18 +59,15 @@ const CurriculumPage = () => {
               y={0}
               scale={1}
             >
-              {({ toPdf }) => <div className="download-button" onClick={toPdf}>
+              {({ toPdf }) => }
+            </ReactToPdf> */}
+            <a href={pdfAngel} download target="_blank" className="download-button">
               <img src={DownloadIcon} alt="" />
-            </div>}
-            </ReactToPdf>
-            
+            </a>
             <div className="profile-image">
-              <img
-                src={userImage}
-                alt=""
-              />
+              <img src={userImage} alt="" />
             </div>
-            <div className="theme-button">
+            <div className="theme-button" onClick={changeTheme}>
               <img src={MoonIcon} alt="" />
             </div>
           </div>
@@ -110,7 +124,7 @@ const CurriculumPage = () => {
                   <small>2015 - 2020</small>
                 </div>
               </div>
-              
+
               <div className="item">
                 <span className="dot"></span>
                 <div className="content">
