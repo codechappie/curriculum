@@ -118,6 +118,10 @@ transition: all .2s ease-in-out;
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+  color: var(--text-color)
+}
+.personal-information a.item{
+  text-decoration: none;
 }
 .personal-information .contact .item img {
   width: 25px;
@@ -136,6 +140,7 @@ transition: all .2s ease-in-out;
   justify-content: flex-start;
   gap: 6px;
   padding: 0 30px;
+  color: var(--text-color)
 }
 .personal-information .social .item img {
   width: 26px;
@@ -228,10 +233,12 @@ transition: all .2s ease-in-out;
   padding: 0 30px;
 }
 .personal-information .skills .item {
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
+  grid-template-columns: 10px 1fr;
+  line-height: var(--h2-font-size);
 }
 .personal-information .skills .dot {
   width: 8px;
@@ -343,13 +350,13 @@ transition: all .2s ease-in-out;
   align-items: center;
   justify-content: center;
   border: 1px solid #858585;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 6px;
   gap: 10px;
 }
 .more-details .interests .items .item img {
-  width: 32px;
+  width: 22px;
   filter: var(--img-filter);
 }
 .more-details .interests .items .item small {

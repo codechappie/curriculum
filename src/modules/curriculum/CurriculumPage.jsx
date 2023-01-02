@@ -71,44 +71,43 @@ const CurriculumPage = () => {
               <img src={MoonIcon} alt="" />
             </div>
           </div>
-          <div className="name">Angel Canales Alcalde</div>
-          <div className="profession">Desarrollador Web</div>
+          <div className="name">Angel D. Canales Alcalde</div>
+          <div className="profession">Desarrollador Web / Ing. Sistemas</div>
           <div className="contact">
             <div className="item">
               <img src={UbicationIcon} alt="" />
               <small>San Juan de Lurigancho, Lima, Perú</small>
             </div>
-            <div className="item">
+            <a href="mailto:acanalesa14@gmail.com" className="item">
               <img src={EmailIcon} alt="" />
-              <small>davidproyecto01@gmail.com</small>
-            </div>
-            <div className="item">
+              <small>acanalesa14@gmail.com</small>
+            </a>
+            <a href="tel:+51986970093" className="item">
               <img src={PhoneIcon} alt="" />
               <small>+51 986 970 093</small>
-            </div>
+            </a>
           </div>
           <div className="social">
             <h2 className="sub-title">Redes sociales</h2>
-            <div className="item">
+            <a href="https://github.com/codechappie" target="_blank" rel="noreferrer" className="item">
               <img src={GithubIcon} alt="" />
               <small>@codechappie</small>
-            </div>
-            <div className="item">
+            </a>
+            <a href="https://www.linkedin.com/in/canalesalcalde/" target="_blank" rel="noreferrer" className="item">
               <img src={LinkedinIcon} alt="" />
-              <small>@codechappie</small>
-            </div>
-            <div className="item">
+              <small>@canalesalcalde</small>
+            </a>
+            {/* <div className="item">
               <img src={InstagramIcon} alt="" />
               <small>@codechappie</small>
-            </div>
+            </div> */}
           </div>
           <div className="profile">
             <h2 className="sub-title">Perfil</h2>
             <p>
-              Soy un desarrollador web con más de 2 años de experiencia en
-              front-end. Me encanta resolver problemas, trabajar en equipo,
-              investigar y ofrecer productos que satisfagan las necesidades de
-              los usuarios finales.
+              Soy un Ingeniero de Sistemas, me encuentro trabajando en el área de desarrollo web (frontend) por más de 3 años.
+              Me encanta resolver problemas, trabajar en equipo, investigar
+              y ofrecer productos que satisfagan las necesidades de los usuarios finales.
             </p>
           </div>
           <div className="education">
@@ -158,6 +157,10 @@ const CurriculumPage = () => {
               </div>
               <div className="item">
                 <div className="dot"></div>
+                <small>Lit-HTML</small>
+              </div>
+              <div className="item">
+                <div className="dot"></div>
                 <small>CSS3</small>
               </div>
               <div className="item">
@@ -184,21 +187,48 @@ const CurriculumPage = () => {
                 <div className="dot"></div>
                 <small>SQL</small>
               </div>
+              <div className="item">
+                <div className="dot"></div>
+                <small>Diseño responsive</small>
+              </div>
+              <div className="item">
+                <div className="dot"></div>
+                <small>Consumo de APIs</small>
+              </div>
+              <div className="item">
+                <div className="dot"></div>
+                <small>Backend básico</small>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="more-details">
           <div className="experience">
-            <h2 className="sub-title">Experiencia</h2>
+            <h2 className="sub-title">Experiencia laboral</h2>
             <div className="items">
+              <div className="item">
+                <div className="dot"></div>
+                <div className="content">
+                  <h2 className="title">Center Developer</h2>
+                  <h3 className="company">NTT DATA Europe & LATAM</h3>
+                  <div className="date">
+                    Desde Agosto del 2021 hasta la actualidad
+                  </div>
+                  <p className="description">
+                    Junto a un equipo de tecnología conformado por personas de Perú y España,  
+                    Nos encontramos finalizando un proyecto de migración del aplicativo 
+                    web de la Red Eléctrica de España (REE).
+                  </p>
+                </div>
+              </div>
               <div className="item">
                 <div className="dot"></div>
                 <div className="content">
                   <h2 className="title">Programador web</h2>
                   <h3 className="company">ARCA DE PAPEL E.I.R.L.</h3>
                   <div className="date">
-                    Desde Noviembre del 2019 hasta la actualidad
+                    Desde Noviembre del 2019 hasta el Julio del 2021
                   </div>
                   <p className="description">
                     Encargado de diseñar y desarrollar interfaces responsivas.

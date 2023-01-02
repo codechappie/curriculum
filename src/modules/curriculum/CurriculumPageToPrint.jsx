@@ -55,7 +55,7 @@ const CurriculumPageToPrint = () => {
             </div>
             <div className="item">
               <img src={EmailIcon} alt="" />
-              <small>davidproyecto01@gmail.com</small>
+              <small>davidproyecto@gmail.com</small>
             </div>
             <div className="item">
               <img src={PhoneIcon} alt="" />
@@ -163,16 +163,31 @@ const CurriculumPageToPrint = () => {
         </div>
 
         <div className="more-details">
-          <div className="experience">
+        <div className="experience">
             <h2 className="sub-title">Experiencia</h2>
             <div className="items">
+              <div className="item">
+                <div className="dot"></div>
+                <div className="content">
+                  <h2 className="title">Center Developer</h2>
+                  <h3 className="company">NTT Data</h3>
+                  <div className="date">
+                    Desde Agosto del 2021 hasta la actualidad
+                  </div>
+                  <p className="description">
+                    Junto a un equipo de tecnología conformado por personas de Perú y España,  
+                    Nos encontramos finalizando un proyecto de migración del aplicativo 
+                    web de la Red Eléctrica de España (REE).
+                  </p>
+                </div>
+              </div>
               <div className="item">
                 <div className="dot"></div>
                 <div className="content">
                   <h2 className="title">Programador web</h2>
                   <h3 className="company">ARCA DE PAPEL E.I.R.L.</h3>
                   <div className="date">
-                    Desde Noviembre del 2019 hasta la actualidad
+                    Desde Noviembre del 2019 hasta el Julio del 2021
                   </div>
                   <p className="description">
                     Encargado de diseñar y desarrollar interfaces responsivas.
