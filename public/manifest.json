@@ -1,0 +1,42 @@
+{
+  "name": "Currículum - Angel Canales Alcalde",
+  "short_name": "Angel Canales Alcalde - CV",
+  "theme_color": "black-translucent",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": ".",
+  "start_url": ".",
+  "categories": ["-", "-", "-", "-", "-"],
+  "icons": [
+    {
+      "src": "assets/icons/favicon.png",
+      "sizes": "256x256",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "assets/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "assets/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "assets/icons/icon-1024x1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    }
+  ]
+}

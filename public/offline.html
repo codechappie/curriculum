@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum - Angel Canales Alcalde</title>
+    <style>
+        *{
+            margin: 0;
+            padidng: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+        }
+        .offline-container{
+            width: 100vw;
+            height: 100vh;
+            background: #222831;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .offline-box{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .offline-box button{
+            padding: 6px 24px;
+            background-color: rgb(20, 197, 20);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+   <div class="offline-container">
+    <div class="offline-box">
+        <h1>¡Oh, estas sin conexión!</h1>
+        <p>Esta aplicación necesita de conexión a internet 😖</p>
+        <button onClick="window.location.reload();">Reintentar</button>
+    </div>
+   </div>
+
+    <script>
+        function reloadApp () {
+            reload = location. reload();
+        }
+    </script>
+</body>
+</html>
