@@ -16,7 +16,6 @@ const Page = () => {
             bodyElement.classList.add('dark')
             setTheme('dark');
         }
-        console.log();
     };
 
     return (
