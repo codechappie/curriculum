@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import style from './page.module.scss';
 
-const page = () => {
+const Page = () => {
     const [theme, setTheme] = useState('dark');
 
     const changeTheme = () => {
@@ -294,4 +294,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
