@@ -19,6 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head/>
       <body id="body" className={`dark ${inter.className}`}>{children}</body>
     </html>
   );
