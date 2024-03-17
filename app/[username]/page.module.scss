@@ -1,0 +1,547 @@
+.curriculumPage {
+  width: 100%;
+  color: var(--text-color);
+  margin: 4rem 0;
+  transition: background 0.2s ease-in-out;
+
+  &.false {
+    display: none;
+  }
+}
+
+.curriculumPageContainer {
+  max-width: 1200px;
+  height: 100%;
+  width: 96%;
+  margin: 0 auto;
+  background: var(--page-color);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.205);
+  overflow: hidden;
+}
+
+.subTitle {
+  width: 100%;
+  padding: 5px 30px;
+  background: var(--page-dark-light);
+}
+.personalInformation {
+  display: flex;
+  flex-direction: column;
+
+  .mainProfile {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: var(--mb-2);
+    padding: 30px;
+    padding-bottom: 0;
+
+    .profileImage {
+      max-width: 200px;
+      max-height: 200px;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      margin-top: 30px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+    }
+
+    .downloadButton,
+    .themeButton {
+      width: 50px;
+      padding: 10px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: var(--img-filter);
+      }
+    }
+  }
+
+  .name {
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: var(--h1-font-size);
+    font-weight: var(--font-semi-bold);
+    text-transform: uppercase;
+    flex-wrap: wrap;
+    word-spacing: normal;
+    word-break: break-word;
+    padding: 0 10px;
+  }
+
+  .profession {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 10px;
+    font-size: var(--h2-font-size);
+    font-weight: var(--font-medium);
+    margin-bottom: var(--mb-3);
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: var(--mb-3);
+    padding: 0 30px;
+    padding-top: 10px;
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      color: var(--text-color);
+
+      img {
+        width: 25px;
+        filter: var(--img-filter);
+      }
+    }
+  }
+
+  a.item {
+    text-decoration: none;
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: var(--mb-3);
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      padding: 0 30px;
+      color: var(--text-color);
+
+      img {
+        width: 26px;
+        filter: var(--img-filter);
+      }
+    }
+  }
+
+  .profile {
+    margin-bottom: var(--mb-4);
+
+    p {
+      margin-top: 10px;
+      font-size: var(--normal-font-size);
+      padding: 0 30px;
+    }
+  }
+
+  .education {
+    .items {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 10px;
+      padding: 0 30px;
+
+      .item {
+        display: grid;
+        align-items: flex-start;
+        grid-template-columns: 16px 1fr;
+        gap: 10px;
+        position: relative;
+        padding-bottom: var(--mb-4);
+
+        &::before {
+          content: "";
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          top: 9px;
+          left: 0.41em;
+          width: 2px;
+          height: 100%;
+          background: #9c9c9c;
+        }
+
+        &:last-child::before {
+          content: "";
+          height: 0;
+        }
+
+        .content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 5px;
+
+          .title {
+            font-size: var(--h2-font-size);
+            font-weight: var(--font-medium);
+          }
+
+          .university {
+            font-size: var(--h3-font-size);
+          }
+        }
+      }
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #9c9c9c;
+      margin-top: 8px;
+    }
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: var(--mb-4);
+
+    .items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      align-items: center;
+      justify-items: flex-start;
+      column-gap: 10px;
+      row-gap: 20px;
+      margin-top: 15px;
+      padding: 0 30px;
+      .item {
+        display: grid;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        grid-template-columns: 10px 1fr;
+        line-height: var(--h2-font-size);
+
+        small {
+          font-size: var(--normal-font-size);
+        }
+      }
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #6b6b6b;
+      border-radius: 50%;
+    }
+  }
+}
+
+.moreDetails {
+  background: var(--page-dark-light);
+  padding: 30px 0;
+
+  .experience {
+    .items {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 20px;
+      padding: 0 30px;
+
+      .item {
+        display: grid;
+        align-items: flex-start;
+        justify-content: flex-start;
+        grid-template-columns: 22px 1fr;
+        gap: 10px;
+        position: relative;
+        padding-bottom: 30px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 2px;
+          height: 100%;
+          background: #959595;
+          top: 8px;
+          left: 0.6em;
+        }
+
+        &:last-child::before {
+          content: "";
+          height: 0;
+        }
+
+        .content {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .title {
+            font-size: var(--h2-font-size);
+            font-weight: var(--font-semi-bold);
+          }
+          .company {
+            font-size: var(--h3-font-size);
+            font-weight: var(--font-medium);
+          }
+          .date {
+            font-size: var(--small-font-size);
+          }
+          .description {
+            font-size: var(--normal-font-size);
+          }
+        }
+
+        .dot {
+          width: 22px;
+          height: 22px;
+          background: #959595;
+          margin-top: 6px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .certificates {
+    margin-bottom: var(--mb-4);
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      margin-top: 14px;
+      padding: 0 30px;
+
+      .item {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 15px;
+        margin-top: 15px;
+        border-top: 1px solid var(--text-color);
+
+        &:first-child {
+          margin-top: 0;
+          padding-top: 0;
+          border: none;
+        }
+
+        .title {
+          font-size: var(--h2-font-size);
+          font-weight: var(--font-semi-bold);
+        }
+      }
+    }
+  }
+
+  .interests {
+    .items {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+      padding: 0 30px;
+
+      .item {
+        display: flex;
+        padding: 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #858585;
+        width: 100px;
+        height: 100px;
+        border-radius: 6px;
+        gap: 10px;
+
+        img {
+          width: 22px;
+          filter: var(--img-filter);
+        }
+
+        small {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .curriculumPage,
+  .curriculumPageContainer {
+    margin: 0;
+    width: 100%;
+  }
+  .curriculumPageContainer {
+    grid-template-columns: 1fr;
+  }
+  .personalInformation {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .subTitle {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+  }
+  .moreDetails {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  .personalInformation {
+    .mainProfile {
+      padding: 20px 20px 0 20px;
+    }
+
+    .contact,
+    .social .item,
+    .profile p,
+    .education .items,
+    .skills .items {
+      padding: 0 20px !important;
+    }
+  }
+
+  .moreDetails {
+    .experience,
+    .certificates,
+    .interests {
+      .items {
+        padding: 0 20px !important;
+      }
+    }
+
+    .experience {
+      .items {
+        .item {
+          &::before {
+            left: 0.406em;
+          }
+          .dot {
+            width: 15px;
+            height: 15px;
+            background: #959595;
+            margin-top: 6px;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+
+  .contact,
+  .social {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center;
+    flex-wrap: wrap;
+    .item {
+      width: fit-content;
+    }
+  }
+  .profile {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .personalInformation {
+    .mainProfile {
+      .profileImage {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .personalInformation {
+    .mainProfile {
+      .profileImage {
+        width: 130px;
+        height: 130px;
+      }
+    }
+
+    .mainProfile,
+    .contact {
+      padding: 10px;
+      padding-bottom: 0;
+    }
+
+    .social .item,
+    .profile p,
+    .education .items,
+    .skills .items {
+      padding: 0 10px;
+    }
+  }
+
+  .moreDetails {
+    .experience,
+    .certificates,
+    .interests {
+      .items {
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+@media print {
+  .download-button,
+  .theme-button {
+    display: none;
+  }
+  .curriculum-page {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .curriculum-page-container {
+    margin: auto;
+    border: 1px solid #333;
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+  }
+}
