@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import CurriculumPage from './modules/curriculum/CurriculumPage.jsx';
 import CurriculumPageToPrint from './modules/curriculum/CurriculumPageToPrint.jsx';
 
