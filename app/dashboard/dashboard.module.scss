@@ -53,9 +53,18 @@
                         display: grid;
                         align-items: center;
                         justify-items: center;
-                        gap: 10px;
+                        gap: 5px;
                         grid-template-columns: 150px 1fr;
                         margin-bottom: 1rem;
+                    }
+                    .chips {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        flex-wrap: wrap;
+                    }
+                    .chipImg {
+                        fill: var(--iconBg);
                     }
                 }
 

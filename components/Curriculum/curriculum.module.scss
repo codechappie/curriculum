@@ -175,17 +175,27 @@
     gap: 12px;
     margin-bottom: var(--mb-3);
 
-    .item {
+    .items {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      gap: 6px;
-      padding: 0 30px;
-      color: var(--text-color);
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 0 20px;
 
-      img {
-        width: 26px;
-        filter: var(--img-filter);
+      .item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        padding: 0 5px;
+        color: var(--text-color);
+
+        svg {
+          width: 26px;
+          filter: var(--img-filter);
+        }
       }
     }
   }
@@ -472,7 +482,7 @@
     .profile p,
     .education .items,
     .skills .items {
-      padding: 0 20px !important;
+      padding: 0 30px !important;
     }
   }
 
@@ -548,7 +558,7 @@
     .profile p,
     .education .items,
     .skills .items {
-      padding: 0 10px;
+      padding: 0 5px;
     }
   }
 

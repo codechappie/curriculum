@@ -1,14 +1,15 @@
 "use client";
-import { Accordion, AccordionItem, Avatar, Button, Chip, Divider, Input, Select, SelectItem, Textarea, User } from '@nextui-org/react';
-import { redirect } from "next/navigation";
+import AppContainer from '@/components/AppContainer';
+import Curriculum from '@/components/Curriculum/Curriculum';
+import Icon from '@/components/Icon';
+import { DiscordIcon, GithubIcon, TwitterIcon } from '@/components/icons';
+import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Textarea } from '@nextui-org/react';
 import axios from 'axios';
 import { useSession } from "next-auth/react";
-import { useEffect, useId, useState } from "react";
-import AppContainer from '@/components/AppContainer';
-import styles from './dashboard.module.scss'
-import Curriculum from '@/components/Curriculum/Curriculum';
-import { DeleteIcon, DiscordIcon, GithubIcon, HeartFilledIcon, TwitterIcon } from '@/components/icons';
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import styles from './dashboard.module.scss';
 
 const SNSInitialValue = {
   iconid: "",
@@ -19,7 +20,7 @@ const SNSInitialValue = {
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["2"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["3"]));
   const [skills, setSkills] = useState(["HTML5"]);
   const [currentSkill, setCurrentSkill] = useState("");
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
@@ -33,6 +34,7 @@ const Dashboard = () => {
     phoneNumber: "",
     profileDescription: "",
     socialNetworks: [],
+    academicEducation: [],
   });
 
 
@@ -106,6 +108,10 @@ const Dashboard = () => {
 
   }
 
+  const saveGlobalChanges = () => {
+    console.log("GLOBALSTATE", globalState)
+  }
+
   return (
     <AppContainer isFooter={false}>
       <div className={styles.dashboardPage}>
@@ -159,7 +165,7 @@ const Dashboard = () => {
                       type="text"
                       label="Phone number"
                       value={globalState.phoneNumber}
-                      placeholder='5198567765'
+                      placeholder='+5198567765'
                       onChange={(e) => handleChange(e.target.value, "phoneNumber")}
                     />
                     <Textarea
@@ -181,17 +187,19 @@ const Dashboard = () => {
                       setValue={setCurrentSocialNetwork}
                       data={currentSocialNetwork}
                     />
-                    {globalState.socialNetworks.map((snsItem, index) => (
-                      <Chip
-                        key={index}
-                        startContent={snsItem.iconid}
-                        onDoubleClick={() => handleEditvalue(snsItem.id)}
-                        onClose={() => handleCloseSocialNetworks(snsItem.id)}
-                        size='lg'
-                        variant="flat">
-                        {snsItem.name}
-                      </Chip>
-                    ))}
+                    <div className={styles.chips}>
+                      {globalState.socialNetworks.map((snsItem, index) => (
+                        <Chip
+                          key={index}
+                          startContent={<Icon className={styles.chipImg} id={snsItem.iconid} size={22} />}
+                          onDoubleClick={() => handleEditvalue(snsItem.id)}
+                          onClose={() => handleCloseSocialNetworks(snsItem.id)}
+                          size='lg'
+                          variant="flat">
+                          {snsItem.name}
+                        </Chip>
+                      ))}
+                    </div>
                   </div>
                 </AccordionItem>
                 <AccordionItem key="3"
@@ -199,10 +207,22 @@ const Dashboard = () => {
                   title="Education">
                   <div className={styles.educationContainer}>
                     <EducationInput />
-                    <Divider />
-                    <EducationInput />
-                    <Divider />
-                    <EducationInput />
+
+                    {globalState.academicEducation.map((snsItem, index) => {
+                      return (
+                        <>
+                          {index === 0 && <Divider />}
+                          <Chip
+                            key={index}
+                            onDoubleClick={() => handleEditvalue(snsItem.id)}
+                            onClose={() => handleCloseSocialNetworks(snsItem.id)}
+                            size='lg'
+                            variant="flat">
+                            {snsItem.name}
+                          </Chip>
+                        </>
+                      )
+                    })}
                   </div>
                 </AccordionItem>
 
@@ -276,7 +296,12 @@ const Dashboard = () => {
                 </AccordionItem>
               </Accordion>
             </section>
-            <Button className='w-full' color='primary' size='lg'>Save changes</Button>
+            <Button
+              className='w-full'
+              color='primary'
+              size='lg'
+              onClick={saveGlobalChanges}
+            >Save changes</Button>
           </div>
           <div className={styles.previewContainer}>
             <Curriculum isMobile={true} {...globalState} />
@@ -310,27 +335,24 @@ const SnsSelectInput = ({ handleAdd, setValue, data }) => {
   return (
     <div className={styles.snsInput}>
       <Select
+        aria-label="Social icon"
         items={snsData}
-        placeholder="Social Networking site"
+        placeholder="Social icon"
         className="flex items-center gap-2"
         selectedKeys={data.iconid ? [data.iconid] : []}
         onChange={(e) => {
-          console.log("VAZL", e.target.value)
           setValue((state) => ({
             ...state,
             iconid: e.target.value
           }))
-
-
-          console.log("DATA", data)
         }
         }
         classNames={{
           trigger: "h-14",
         }}
         renderValue={(items) => {
-          return items.map((item) => (
-            <div key={item.iconid} className="flex items-center gap-2">
+          return items.map((item, index) => (
+            <div key={index} className="flex items-center gap-2">
               {item.data.avatar}
 
               <div className="flex flex-col">
@@ -389,9 +411,15 @@ const EducationInput = () => {
   return (
     <div className={styles.educationInput}>
       <Input type="text" className={styles.fullField} label="Title" />
-      <Textarea type="text" className={styles.fullField} label="Short description" />
+      <Textarea type="text" maxLength={100} className={styles.fullField} label="Short description" />
       <Input type="month" label="Start date" />
       <Input type="month" label="End date" />
+      <Button
+        className={`w-full ${styles.fullField}`}
+        color='secondary'
+      >
+        Save
+      </Button>
     </div>)
 }
 

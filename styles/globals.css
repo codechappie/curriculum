@@ -27,6 +27,7 @@
   --page-dark-light: #fafafa;
   --scrollBg: #a0a0a0;
   --scrollThumbBg: #5a5a5a;
+  --iconBg: #3a3a3a;
 
   /* Font and Typography*/
   --body-font: "Poppins", sans-serif;
@@ -74,6 +75,7 @@ html.dark {
   --page-dark-light: #222222;
   --scrollBg: #474747;
   --scrollThumbBg: #1d1d1d;
+  --iconBg: #f3f3f3;
 
   /* Font and Typography*/
   --body-font: "Poppins", sans-serif;

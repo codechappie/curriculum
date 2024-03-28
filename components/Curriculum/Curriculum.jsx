@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import style from './curriculum.module.scss';
 import { ThemeSwitch } from '@/components/theme-switch';
 import AppContainer from '@/components/AppContainer';
+import Icon from '@/components/Icon';
 
 const Curriculum = ({
     isMobile = false,
@@ -12,7 +13,9 @@ const Curriculum = ({
     address,
     email,
     phoneNumber,
-    profileDescription }) => {
+    profileDescription,
+    socialNetworks,
+    academicEducation, }) => {
 
     return (
         <AppContainer isNavbar={false} >
@@ -41,34 +44,30 @@ const Curriculum = ({
                                 <img src="/icons/email.svg" alt="" />
                                 <small>{email || "Enter your email"}</small>
                             </a>
-                            <a href={`tel:+${phoneNumber}`} className={style.item}>
+                            <a href={`tel:${phoneNumber}`} className={style.item}>
                                 <img src="/icons/phone.svg" alt="" />
                                 <small>{phoneNumber || "Enter your phone Number"}</small>
                             </a>
                         </div>
-                        <div className={style.social}>
-                            <h2 className={style.subTitle}>Redes sociales</h2>
-                            <a href="https://github.com/codechappie" target="_blank" rel="noreferrer" className={style.item}>
-                                <img src="/icons/github.svg" alt="" />
-                                <small>@codechappie</small>
-                            </a>
-                            <a href="https://www.linkedin.com/company/codechappie" target="_blank" rel="noreferrer" className={style.item}>
-                                <img src="/icons/linkedin.svg" alt="" />
-                                <small>@codechappie</small>
-                            </a>
-                            <div className={style.item}>
-                                <img src="/icons/instagram.svg" alt="" />
-                                <small>@codechappie</small>
+                        {(socialNetworks && socialNetworks.length) > 0 && (<div className={style.social}>
+                            <h2 className={style.subTitle}>Social Networking Sites</h2>
+
+                            <div className={style.items}>
+                                {socialNetworks.map((snsItem) => (<a key={snsItem.id} href={snsItem.url}
+                                    target="_blank" rel="noreferrer" className={style.item} alt={snsItem.name} >
+                                    <Icon id={snsItem.iconid} />
+                                    <small>{snsItem.name}</small>
+                                </a>))}
                             </div>
-                        </div>
+                        </div>)}
                         <div className={style.profile}>
-                            <h2 className={style.subTitle}>Perfil</h2>
+                            <h2 className={style.subTitle}>Profile</h2>
                             <p>
                                 {profileDescription || "Enter a brief description of your profile"}
                             </p>
                         </div>
-                        <div className={style.education}>
-                            <h2 className={style.subTitle}>Educación</h2>
+                        {(academicEducation && academicEducation.length > 0) && (<div className={style.education}>
+                            <h2 className={style.subTitle}>Academic education</h2>
                             <div className={style.items}>
                                 <div className={style.item}>
                                     <div className={style.dot}></div>
@@ -104,7 +103,7 @@ const Curriculum = ({
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>)}
                         <div className={style.skills}>
                             <h2 className={style.subTitle}>Habilidades</h2>
                             <div className={style.items}>
