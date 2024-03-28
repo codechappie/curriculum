@@ -1,18 +1,29 @@
 "use client";
-import { Accordion, AccordionItem, Avatar, Button, Divider, Input, Select, SelectItem, Textarea, User } from '@nextui-org/react';
+import { Accordion, AccordionItem, Avatar, Button, Chip, Divider, Input, Select, SelectItem, Textarea, User } from '@nextui-org/react';
 import { redirect } from "next/navigation";
 import axios from 'axios';
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import AppContainer from '@/components/AppContainer';
 import styles from './dashboard.module.scss'
-import Page from '../user/[username]/page';
-import { DeleteIcon } from '@/components/icons';
+import Curriculum from '@/components/Curriculum/Curriculum';
+import { DeleteIcon, GithubIcon } from '@/components/icons';
 
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
   const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
+  const [skills, setSkills] = useState(["HTML5"]);
+  const [currentSkill, setCurrentSkill] = useState("");
+
+  const [globalState, setGlobalState] = useState({
+    profileImage: "",
+    fullName: "",
+    occupation: "",
+    address: "",
+    email: "",
+    phoneNumber: "",
+  });
 
 
   useEffect(() => {
@@ -29,7 +40,30 @@ const Dashboard = () => {
     });
   }
 
+  const handleClose = (skillToRemove) => {
+    setSkills(skills.filter(skill => skill !== skillToRemove));
+  };
 
+  const addSkill = () => {
+    const skill = currentSkill.trim();
+    const found = skills.find(element => skill === element);
+    if (skill !== "" && !found) {
+      const skillsUpdated = [...skills, skill];
+      setSkills(skillsUpdated);
+    }
+    setCurrentSkill("")
+  }
+  // https://i.pravatar.cc/150?u=a04258114e29026702d
+
+  const handleChange = (e, key) => {
+    const value = e.target.value;
+
+    setGlobalState((state) => ({
+      ...state,
+      [key]: value
+    }))
+
+  }
 
   return (
     <AppContainer>
@@ -44,16 +78,49 @@ const Dashboard = () => {
                 <AccordionItem key="1" aria-label="Basic Information" title="Basic Information">
                   <div className={styles.basicInformation}>
                     <div className={styles.userProfile}>
-                      <img src="https://i.pravatar.cc/150?u=a04258114e29026702d" alt="" />
-                      <Input type="text" label="URL image" />
+                      <img src={globalState.profileImage || "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"} alt="" />
+                      <Input
+                        type="text"
+                        label="URL image"
+                        value={globalState.profileImage}
+                        onChange={(e) => handleChange(e, "profileImage")}
+                      />
                     </div>
-                    <Input type="text" label="Full name" />
-                    <Input type="text" label="Ocupation" />
+                    <Input
+                      type="text"
+                      label="Full name"
+                      value={globalState.fullName}
+                      onChange={(e) => handleChange(e, "fullName")}
+                    />
+                    <Input
+                      type="text"
+                      label="Occupation"
+                      value={globalState.occupation}
+                      onChange={(e) => handleChange(e, "occupation")}
+                    />
 
                     <Divider className={styles.fullField} />
-                    <Input type="text" label="Full address" className={styles.fullField} />
-                    <Input type="email" label="Email" />
-                    <Input type="text" label="Phone number" />
+                    <Input
+                      type="text"
+                      label="Full address"
+                      className={styles.fullField}
+                      maxLength={42}
+                      value={globalState.address}
+                      onChange={(e) => handleChange(e, "address")}
+                    />
+                    <Input
+                      type="email"
+                      label="Email"
+                      value={globalState.email}
+                      onChange={(e) => handleChange(e, "email")}
+                    />
+                    <Input
+                      type="text"
+                      label="Phone number"
+                      value={globalState.phoneNumber}
+                      placeholder='5198567765'
+                      onChange={(e) => handleChange(e, "phoneNumber")}
+                    />
                     <Textarea
                       key="flat"
                       variant="flat"
@@ -61,6 +128,8 @@ const Dashboard = () => {
                       labelPlacement="inside"
                       placeholder="Enter your description"
                       className={`${styles.fullField} col-span-12 md:col-span-6 mb-6 md:mb-0`}
+                      value={globalState.profileDescription}
+                      onChange={(e) => handleChange(e, "profileDescription")}
                     />
                   </div>
                 </AccordionItem>
@@ -75,19 +144,88 @@ const Dashboard = () => {
                   aria-label="Education"
                   title="Education">
                   <div className={styles.educationContainer}>
-                    <div className={styles.educationInput}>
-                      <Input type="text" label="Title" />
-                      <Input type="text" label="Short description" />
-                      <Input type="month" label="Start date" />
-                      <Input type="month" label="End date" />
+                    <EducationInput />
+                    <Divider />
+                    <EducationInput />
+                    <Divider />
+                    <EducationInput />
+                  </div>
+                </AccordionItem>
+
+
+                <AccordionItem key="4"
+                  aria-label="Skills"
+                  title="Skills">
+                  <div className={styles.skillsContainer}>
+                    <div>
+                      <Input
+                        type="text"
+                        label="Skill"
+                        value={currentSkill}
+                        onChange={e => setCurrentSkill(e.target.value)}
+                      />
+                      <Button onClick={() => addSkill()}>Add</Button>
                     </div>
+                    {skills.map((skill, index) => (
+                      <Chip key={index} onClose={() => handleClose(skill)} variant="flat">
+                        {skill}
+                      </Chip>
+                    ))}
+                  </div>
+                </AccordionItem>
+
+                <AccordionItem key="5"
+                  aria-label="Work experience"
+                  title="Work experience">
+                  <div className={styles.workExperience}>
+                    <WorkExperienceInput />
+                    <Divider />
+                    <WorkExperienceInput />
+                    <Divider />
+                    <WorkExperienceInput />
+                  </div>
+                </AccordionItem>
+
+                <AccordionItem key="6"
+                  aria-label="Certificates"
+                  title="Certificates">
+                  <div className={styles.workExperience}>
+                    <CertificatesInput />
+                    <Divider />
+                    <CertificatesInput />
+                  </div>
+                </AccordionItem>
+
+                <AccordionItem key="7"
+                  aria-label="Interests"
+                  title="Interests">
+                  <div className={styles.workExperience}>
+                    <div>
+                      <Input
+                        type="text"
+                        label="Skill"
+                        value={currentSkill}
+                        list='["text", "prueba"]'
+                        onChange={e => setCurrentSkill(e.target.value)}
+                      />
+                      <Button onClick={() => addSkill()}>Add</Button>
+                    </div>
+                    {skills.map((skill, index) => (
+                      <Chip
+                        startContent={<GithubIcon size={18} />}
+                        variant="faded"
+                        key={index} onClose={() => handleClose(skill)}
+                      >  {skill}
+                      </Chip>
+                    ))}
                   </div>
                 </AccordionItem>
               </Accordion>
             </section>
+            <Button className='w-full' color='primary' size='lg'>Save changes</Button>
           </div>
           <div className={styles.previewContainer}>
-            <Page isMobile={true} />
+            <Curriculum isMobile={true} {...globalState} />
           </div>
         </div>
       </div>
@@ -182,6 +320,36 @@ const SnsSelectInput = () => {
   )
 }
 
+
+const EducationInput = () => {
+  return (
+    <div className={styles.educationInput}>
+      <Input type="text" className={styles.fullField} label="Title" />
+      <Textarea type="text" className={styles.fullField} label="Short description" />
+      <Input type="month" label="Start date" />
+      <Input type="month" label="End date" />
+    </div>)
+}
+
+
+const WorkExperienceInput = () => {
+  return (
+    <div className={styles.workExperienceInput}>
+      <Input type="text" className={styles.fullField} label="Job title" />
+      <Input type="text" className={styles.fullField} label="Company" />
+      <Input type="month" label="Start date" />
+      <Input type="month" label="End date" />
+      <Textarea label="Description" className={styles.fullField} />
+    </div>)
+}
+
+const CertificatesInput = () => {
+  return (
+    <div className={styles.certificatesInput}>
+      <Input type="text" className={styles.fullField} label="Certificate title" />
+      <Textarea label="Description" className={styles.fullField} />
+    </div>)
+}
 
 
 export default Dashboard;

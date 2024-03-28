@@ -25,6 +25,8 @@
   --body-color: #fff;
   --page-color: #f3f3f6;
   --page-dark-light: #fafafa;
+  --scrollBg: #a0a0a0;
+  --scrollThumbBg: #5a5a5a;
 
   /* Font and Typography*/
   --body-font: "Poppins", sans-serif;
@@ -70,6 +72,8 @@ html.dark {
   --body-color: #333;
   --page-color: #1a1a1a;
   --page-dark-light: #222222;
+  --scrollBg: #474747;
+  --scrollThumbBg: #1d1d1d;
 
   /* Font and Typography*/
   --body-font: "Poppins", sans-serif;
