@@ -69,39 +69,16 @@ const Curriculum = ({
                         {(academicEducation && academicEducation.length > 0) && (<div className={style.education}>
                             <h2 className={style.subTitle}>Academic education</h2>
                             <div className={style.items}>
-                                <div className={style.item}>
+                                {academicEducation.map((educationItem) => (<div key={educationItem.id} className={style.item}>
                                     <div className={style.dot}></div>
                                     <div className={style.content}>
-                                        <h2 className={style.title}>Ingeniería de Sistemas</h2>
+                                        <h2 className={style.title}>{educationItem.title}</h2>
                                         <small className={style.university}>
-                                            Universidad
+                                            {educationItem.shortDescription}
                                         </small>
-                                        <small>2015 - 2020</small>
+                                        <small>{educationItem.startDate} - {educationItem.endDate}</small>
                                     </div>
-                                </div>
-
-                                <div className={style.item}>
-                                    <span className={style.dot}></span>
-                                    <div className={style.content}>
-                                        <h2 className={style.title}>Ingles Avanzado</h2>
-                                        <small className={style.university}>
-                                            Asociación Cultural Británica
-                                        </small>
-                                        <small>2015 - 2020</small>
-                                    </div>
-                                </div>
-                                <div className={style.item}>
-                                    <span className={style.dot}></span>
-                                    <div className={style.content}>
-                                        <h2 className={style.title}>
-                                            Introducción al Desarrollo Web: HTML y CSS
-                                        </h2>
-                                        <small className={style.university}>
-                                            Curso Online: Universidad de Alicante y Google Activate
-                                        </small>
-                                        <small>2015</small>
-                                    </div>
-                                </div>
+                                </div>))}
                             </div>
                         </div>)}
                         <div className={style.skills}>

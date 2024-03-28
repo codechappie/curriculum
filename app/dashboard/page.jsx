@@ -17,6 +17,14 @@ const SNSInitialValue = {
   url: "",
 }
 
+// TODO: Make posible end date as currently
+const AcademicEducationInitialValue = {
+  title: "",
+  shortDescription: "",
+  startDate: "",
+  endDate: "",
+}
+
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
@@ -24,6 +32,8 @@ const Dashboard = () => {
   const [skills, setSkills] = useState(["HTML5"]);
   const [currentSkill, setCurrentSkill] = useState("");
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
+  const [currentAcademicEducation, setCurrentAcademicEducation] = useState(AcademicEducationInitialValue);
+
 
   const [globalState, setGlobalState] = useState({
     profileImage: "",
@@ -96,6 +106,40 @@ const Dashboard = () => {
     const found = globalState.socialNetworks.find(snsItem => snsItem.id === id);
     setCurrentSocialNetwork(found)
   }
+
+
+  const addAcademicEducation = () => {
+    const unique_id = uuid();
+
+    const found = globalState.academicEducation.find(element => currentAcademicEducation.id === element.id);
+
+    if (!found) {
+      const academicEducation = { ...currentAcademicEducation, id: unique_id };
+      const academicEducationUpdated = [...globalState.academicEducation, academicEducation];
+      handleChange(academicEducationUpdated, "academicEducation")
+    } else {
+      const filtered = globalState.academicEducation.filter(element => currentAcademicEducation.id !== element.id);
+      const academicEducationUpdated = [...filtered, currentAcademicEducation];
+
+      handleChange(academicEducationUpdated, "academicEducation")
+    }
+
+
+
+    setCurrentAcademicEducation(AcademicEducationInitialValue);
+  }
+
+  const handleCloseAcademicEducation = (id) => {
+    handleChange(globalState.academicEducation.filter(educationItem => educationItem.id !== id), "academicEducation");
+  };
+
+
+  const handleEditAcademicEducation = (id) => {
+    const found = globalState.academicEducation.find(academicItem => academicItem.id === id);
+    setCurrentAcademicEducation(found)
+  }
+
+
 
   // https://i.pravatar.cc/150?u=a04258114e29026702d
 
@@ -206,19 +250,23 @@ const Dashboard = () => {
                   aria-label="Education"
                   title="Education">
                   <div className={styles.educationContainer}>
-                    <EducationInput />
+                    <EducationInput
+                      handleAdd={addAcademicEducation}
+                      setValue={setCurrentAcademicEducation}
+                      data={currentAcademicEducation}
+                    />
 
-                    {globalState.academicEducation.map((snsItem, index) => {
+                    {globalState.academicEducation.map((educationItem, index) => {
                       return (
                         <>
                           {index === 0 && <Divider />}
                           <Chip
                             key={index}
-                            onDoubleClick={() => handleEditvalue(snsItem.id)}
-                            onClose={() => handleCloseSocialNetworks(snsItem.id)}
+                            onDoubleClick={() => handleEditAcademicEducation(educationItem.id)}
+                            onClose={() => handleCloseAcademicEducation(educationItem.id)}
                             size='lg'
                             variant="flat">
-                            {snsItem.name}
+                            {educationItem.name}
                           </Chip>
                         </>
                       )
@@ -407,16 +455,26 @@ const SnsSelectInput = ({ handleAdd, setValue, data }) => {
 }
 
 
-const EducationInput = () => {
+const EducationInput = ({ handleAdd, setValue, data }) => {
   return (
     <div className={styles.educationInput}>
-      <Input type="text" className={styles.fullField} label="Title" />
+      <Input
+        type="text"
+        className={styles.fullField}
+        label="Title"
+        value={data.title}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          title: e.target.value
+        }))}
+      />
       <Textarea type="text" maxLength={100} className={styles.fullField} label="Short description" />
       <Input type="month" label="Start date" />
       <Input type="month" label="End date" />
       <Button
         className={`w-full ${styles.fullField}`}
         color='secondary'
+        onClick={handleAdd}
       >
         Save
       </Button>
