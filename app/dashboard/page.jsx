@@ -3,18 +3,26 @@ import { Accordion, AccordionItem, Avatar, Button, Chip, Divider, Input, Select,
 import { redirect } from "next/navigation";
 import axios from 'axios';
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import AppContainer from '@/components/AppContainer';
 import styles from './dashboard.module.scss'
 import Curriculum from '@/components/Curriculum/Curriculum';
-import { DeleteIcon, GithubIcon } from '@/components/icons';
+import { DeleteIcon, DiscordIcon, GithubIcon, HeartFilledIcon, TwitterIcon } from '@/components/icons';
+import { v4 as uuid } from "uuid";
+
+const SNSInitialValue = {
+  iconid: "",
+  name: "",
+  url: "",
+}
 
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["2"]));
   const [skills, setSkills] = useState(["HTML5"]);
   const [currentSkill, setCurrentSkill] = useState("");
+  const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
 
   const [globalState, setGlobalState] = useState({
     profileImage: "",
@@ -23,6 +31,8 @@ const Dashboard = () => {
     address: "",
     email: "",
     phoneNumber: "",
+    profileDescription: "",
+    socialNetworks: [],
   });
 
 
@@ -53,10 +63,41 @@ const Dashboard = () => {
     }
     setCurrentSkill("")
   }
+
+  const addSocialNetwork = () => {
+    console.log("VAL", currentSocialNetwork)
+    const unique_id = uuid();
+
+    const found = globalState.socialNetworks.find(element => currentSocialNetwork.id === element.id);
+
+    if (!found) {
+      const socialNetwork = { ...currentSocialNetwork, id: unique_id };
+      const socialNetworksUpdated = [...globalState.socialNetworks, socialNetwork];
+      handleChange(socialNetworksUpdated, "socialNetworks")
+    } else {
+      const filtered = globalState.socialNetworks.filter(element => currentSocialNetwork.id !== element.id);
+      const socialNetworksUpdated = [...filtered, currentSocialNetwork];
+
+      handleChange(socialNetworksUpdated, "socialNetworks")
+    }
+
+
+
+    setCurrentSocialNetwork(SNSInitialValue);
+  }
+
+  const handleCloseSocialNetworks = (id) => {
+    handleChange(globalState.socialNetworks.filter(snsItem => snsItem.id !== id), "socialNetworks");
+  };
+
+  const handleEditvalue = (id) => {
+    const found = globalState.socialNetworks.find(snsItem => snsItem.id === id);
+    setCurrentSocialNetwork(found)
+  }
+
   // https://i.pravatar.cc/150?u=a04258114e29026702d
 
-  const handleChange = (e, key) => {
-    const value = e.target.value;
+  const handleChange = (value, key) => {
 
     setGlobalState((state) => ({
       ...state,
@@ -66,7 +107,7 @@ const Dashboard = () => {
   }
 
   return (
-    <AppContainer>
+    <AppContainer isFooter={false}>
       <div className={styles.dashboardPage}>
         <div className={styles.container}>
           <div className={styles.formContainer}>
@@ -83,20 +124,20 @@ const Dashboard = () => {
                         type="text"
                         label="URL image"
                         value={globalState.profileImage}
-                        onChange={(e) => handleChange(e, "profileImage")}
+                        onChange={(e) => handleChange(e.target.value, "profileImage")}
                       />
                     </div>
                     <Input
                       type="text"
                       label="Full name"
                       value={globalState.fullName}
-                      onChange={(e) => handleChange(e, "fullName")}
+                      onChange={(e) => handleChange(e.target.value, "fullName")}
                     />
                     <Input
                       type="text"
                       label="Occupation"
                       value={globalState.occupation}
-                      onChange={(e) => handleChange(e, "occupation")}
+                      onChange={(e) => handleChange(e.target.value, "occupation")}
                     />
 
                     <Divider className={styles.fullField} />
@@ -106,20 +147,20 @@ const Dashboard = () => {
                       className={styles.fullField}
                       maxLength={42}
                       value={globalState.address}
-                      onChange={(e) => handleChange(e, "address")}
+                      onChange={(e) => handleChange(e.target.value, "address")}
                     />
                     <Input
                       type="email"
                       label="Email"
                       value={globalState.email}
-                      onChange={(e) => handleChange(e, "email")}
+                      onChange={(e) => handleChange(e.target.value, "email")}
                     />
                     <Input
                       type="text"
                       label="Phone number"
                       value={globalState.phoneNumber}
                       placeholder='5198567765'
-                      onChange={(e) => handleChange(e, "phoneNumber")}
+                      onChange={(e) => handleChange(e.target.value, "phoneNumber")}
                     />
                     <Textarea
                       key="flat"
@@ -129,15 +170,28 @@ const Dashboard = () => {
                       placeholder="Enter your description"
                       className={`${styles.fullField} col-span-12 md:col-span-6 mb-6 md:mb-0`}
                       value={globalState.profileDescription}
-                      onChange={(e) => handleChange(e, "profileDescription")}
+                      onChange={(e) => handleChange(e.target.value, "profileDescription")}
                     />
                   </div>
                 </AccordionItem>
                 <AccordionItem key="2" aria-label="Social networks" title="Social networks">
                   <div className={styles.socialNetworks}>
-                    <SnsSelectInput />
-                    <SnsSelectInput />
-                    <SnsSelectInput />
+                    <SnsSelectInput
+                      handleAdd={addSocialNetwork}
+                      setValue={setCurrentSocialNetwork}
+                      data={currentSocialNetwork}
+                    />
+                    {globalState.socialNetworks.map((snsItem, index) => (
+                      <Chip
+                        key={index}
+                        startContent={snsItem.iconid}
+                        onDoubleClick={() => handleEditvalue(snsItem.id)}
+                        onClose={() => handleCloseSocialNetworks(snsItem.id)}
+                        size='lg'
+                        variant="flat">
+                        {snsItem.name}
+                      </Chip>
+                    ))}
                   </div>
                 </AccordionItem>
                 <AccordionItem key="3"
@@ -234,88 +288,98 @@ const Dashboard = () => {
 }
 
 
-const SnsSelectInput = () => {
+const SnsSelectInput = ({ handleAdd, setValue, data }) => {
   const snsData = [
     {
-      key: 1,
-      id: 1,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702e"
+
+      iconid: "github",
+      name: "Github",
+      avatar: <GithubIcon />
     },
     {
-      key: 2,
-      id: 2,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d"
+      iconid: "discord",
+      name: "Discord",
+      avatar: <DiscordIcon />
     },
     {
-      key: 3,
-      id: 3,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702w"
-    },
-    {
-      key: 4,
-      id: 4,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702f"
-    },
-    {
-      key: 5,
-      id: 5,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702a"
-    },
-    {
-      key: 6,
-      id: 6,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702h"
-    },
-    {
-      key: 7,
-      id: 7,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702k"
-    },
-    {
-      key: 8,
-      id: 8,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702l"
-    },
-    {
-      key: 9,
-      id: 9,
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d"
+      iconid: "twitter",
+      name: "Twitter",
+      avatar: <TwitterIcon />
     }
   ]
   return (
     <div className={styles.snsInput}>
-
       <Select
         items={snsData}
         placeholder="Social Networking site"
-        className={styles.snsSelect}
+        className="flex items-center gap-2"
+        selectedKeys={data.iconid ? [data.iconid] : []}
+        onChange={(e) => {
+          console.log("VAZL", e.target.value)
+          setValue((state) => ({
+            ...state,
+            iconid: e.target.value
+          }))
+
+
+          console.log("DATA", data)
+        }
+        }
         classNames={{
-          trigger: "h-12",
+          trigger: "h-14",
         }}
         renderValue={(items) => {
           return items.map((item) => (
-            <div key={item.key} className="flex items-center gap-2">
-              <Avatar
-                alt={item.data.name}
-                className="flex-shrink-0"
-                size="md"
-                src={item.data.avatar}
-              />
+            <div key={item.iconid} className="flex items-center gap-2">
+              {item.data.avatar}
+
+              <div className="flex flex-col">
+                <span>{item.data.name}</span>
+              </div>
             </div>
           ));
         }}
       >
-        {(user) => (
-          <SelectItem key={user.id} textValue={user.name}>
+        {(item) => (
+          <SelectItem key={item.iconid} value={item.iconid} textValue={item.name}>
             <div className="flex gap-2 items-center">
-              <Avatar alt={user.name}
-                className="flex-shrink-0" size="sm"
-                src={user.avatar} />
+              {item.avatar}
+
+              <div className="flex flex-col">
+                <span className="text-small">{item.name}</span>
+              </div>
             </div>
           </SelectItem>
         )}
       </Select>
-      <Input type="text" label="Social network" />
+      <Input
+        type="text"
+        label="Social network name"
+        value={data.name}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          name: e.target.value
+        }))}
+      />
+
+      <Input
+        type="text"
+        label="URL"
+        placeholder='https://example.com/username'
+        className={styles.fullField}
+        value={data.url}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          url: e.target.value
+        }))}
+      />
+      <Button
+        className={`w-full ${styles.fullField}`}
+        color='secondary'
+        onClick={handleAdd}
+      >
+        Save Social Network
+      </Button>
     </div>
   )
 }
