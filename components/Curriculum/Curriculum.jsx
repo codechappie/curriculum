@@ -4,6 +4,7 @@ import style from './curriculum.module.scss';
 import { ThemeSwitch } from '@/components/theme-switch';
 import AppContainer from '@/components/AppContainer';
 import Icon from '@/components/Icon';
+import moment from 'moment';
 
 const Curriculum = ({
     isMobile = false,
@@ -66,6 +67,7 @@ const Curriculum = ({
                                 {profileDescription || "Enter a brief description of your profile"}
                             </p>
                         </div>
+                        {/* TODO: Order by year */}
                         {(academicEducation && academicEducation.length > 0) && (<div className={style.education}>
                             <h2 className={style.subTitle}>Academic education</h2>
                             <div className={style.items}>
@@ -76,7 +78,7 @@ const Curriculum = ({
                                         <small className={style.university}>
                                             {educationItem.shortDescription}
                                         </small>
-                                        <small>{educationItem.startDate} - {educationItem.endDate}</small>
+                                        <small>{moment(educationItem.startDate).format("DD MMM YYYY")} to {moment(educationItem.endDate).format("DD MMM YYYY")}</small>
                                     </div>
                                 </div>))}
                             </div>

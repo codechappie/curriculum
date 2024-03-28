@@ -256,21 +256,22 @@ const Dashboard = () => {
                       data={currentAcademicEducation}
                     />
 
-                    {globalState.academicEducation.map((educationItem, index) => {
-                      return (
-                        <>
-                          {index === 0 && <Divider />}
+                    {(globalState.academicEducation && globalState.academicEducation.length > 0) && <Divider />}
+                    <div className={styles.items}>
+                      {globalState.academicEducation.map((educationItem, index) => {
+                        return (
+
                           <Chip
                             key={index}
                             onDoubleClick={() => handleEditAcademicEducation(educationItem.id)}
                             onClose={() => handleCloseAcademicEducation(educationItem.id)}
                             size='lg'
                             variant="flat">
-                            {educationItem.name}
+                            {educationItem.title}
                           </Chip>
-                        </>
-                      )
-                    })}
+                        )
+                      })}
+                    </div>
                   </div>
                 </AccordionItem>
 
@@ -468,9 +469,35 @@ const EducationInput = ({ handleAdd, setValue, data }) => {
           title: e.target.value
         }))}
       />
-      <Textarea type="text" maxLength={100} className={styles.fullField} label="Short description" />
-      <Input type="month" label="Start date" />
-      <Input type="month" label="End date" />
+      <Textarea
+        type="text"
+        maxLength={100}
+        className={styles.fullField}
+        label="Short description"
+        value={data.shortDescription}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          shortDescription: e.target.value
+        }))}
+      />
+      <Input
+        type="date"
+        label="Start date"
+        value={data.startDate}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          startDate: e.target.value
+        }))}
+      />
+      <Input
+        type="date"
+        label="End date"
+        value={data.endDate}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          endDate: e.target.value
+        }))}
+      />
       <Button
         className={`w-full ${styles.fullField}`}
         color='secondary'

@@ -72,6 +72,12 @@
                     display: grid;
                     gap: 20px;
 
+                    .items {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
                     .educationInput {
                         display: grid;
                         gap: 10px;
