@@ -47,9 +47,7 @@ const Page = () => {
     }
 
     return (
-        <>
-            <Curriculum isMobile={false} {...globalState} />
-        </>
+        <Curriculum isMobile={false} {...globalState} />
     )
 }
 
