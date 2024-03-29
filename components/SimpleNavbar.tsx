@@ -31,7 +31,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
-export const Navbar = () => {
+export const SimpleNavbar = () => {
 	const [menuIsOpen, setmenuIsOpen] = useState(false)
 	const { status } = useSession();
 
@@ -45,24 +45,7 @@ export const Navbar = () => {
 					</NextLink>
 				</NavbarBrand>
 				<ul className="hidden md:flex gap-4 justify-start ml-2">
-					{(status === "unauthenticated") && siteConfig.navMenuItems.map((item) => (
-
-						<NavbarItem key={item.href}>
-							<NextLink
-								className={clsx(
-									linkStyles({ color: "foreground" }),
-									"data-[active=true]:text-primary data-[active=true]:font-medium"
-								)}
-								target={item.target}
-								color="foreground"
-								href={item.href}
-							>
-								{item.label}
-							</NextLink>
-						</NavbarItem>
-					))}
-
-					{(status === "authenticated") && siteConfig.authNav.map((item) => (
+					{siteConfig.navMenuItems.map((item) => (
 
 						<NavbarItem key={item.href}>
 							<NextLink
@@ -108,13 +91,27 @@ export const Navbar = () => {
 						Sponsor
 					</Button>
 				</NavbarItem>
+				<NavbarItem className="hidden sm:flex">
+					<Button
+						as={Link}
+						className="text-sm font-normal text-default-600 bg-default-100"
+						href="/login"
+						startContent={<SignOutIcon className="text-danger" />}
+						variant="flat"
+					>
+						Login
+					</Button>
+				</NavbarItem>
 			</NavbarContent>
+
+
 
 			<NavbarContent className="md:hidden basis-1 pl-4" justify="end">
 				<Link href={siteConfig.links.github} aria-label="Github">
 					<GithubIcon size={25} className="text-default-500" />
 				</Link>
 				<ThemeSwitch />
+				
 				<NavbarMenuToggle onClick={() => setmenuIsOpen(!menuIsOpen)} />
 			</NavbarContent>
 
@@ -133,7 +130,7 @@ export const Navbar = () => {
 											: "foreground"
 								}
 								onClick={() => setmenuIsOpen(false)}
-								href={status === "authenticated" ? item.href : "/login"}
+								href={item.href}
 							>
 								{item.label}
 							</Link>

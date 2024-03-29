@@ -15,7 +15,7 @@ const Login = () => {
   if (status === "authenticated") return redirect("/dashboard")
 
   return (
-    <AppContainer isNavbar={true}>
+    <AppContainer isNavbar={true} simpleNavbar={true}>
       <div className={style.login}>
 
         <div className={style.loginContainer}>

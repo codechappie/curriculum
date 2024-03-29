@@ -1,13 +1,15 @@
 import React from 'react'
-import { Navbar } from './navbar'
+import { Navbar } from './navbar';
+import { SimpleNavbar } from './SimpleNavbar';
 import Link from 'next/link'
 import { Spinner } from '@nextui-org/react'
 
-const AppContainer = ({ children, isNavbar = true, isFooter = true, isLoading = false }) => {
+const AppContainer = ({ children, isNavbar = true, simpleNavbar = false, isFooter = true, isLoading = false }) => {
     return (
         <div className={isNavbar ? `relative flex flex-col h-screen` : ''}>
             {isLoading && (<Spinner className='spinner' size='lg' />)}
-            {isNavbar && <Navbar />}
+            {(isNavbar && !simpleNavbar) && <Navbar />}
+            {(simpleNavbar) && <SimpleNavbar />}
             <main className={isNavbar ? `w-full flex-grow` : ''}>
                 {children}
 

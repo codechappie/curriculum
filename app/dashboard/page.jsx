@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from './dashboard.module.scss';
+import Link from 'next/link';
 
 const SNSInitialValue = {
   iconid: "",
@@ -370,12 +371,27 @@ const Dashboard = () => {
                 </AccordionItem> */}
               </Accordion>
             </section>
-            <Button
-              className='w-full'
-              color='primary'
-              size='lg'
-              onClick={saveGlobalChanges}
-            >Save changes</Button>
+            <div className={styles.buttons}>
+              <Link
+                className='w-full button'
+                size='lg'
+                target='_blank'
+                href={`/user/${user.username}`}
+              ><Button
+                size='lg'
+                className='w-full button'
+                color='success'
+              >
+                  See preview
+                </Button></Link>
+
+              <Button
+                className='w-full'
+                color='primary'
+                size='lg'
+                onClick={saveGlobalChanges}
+              >Save changes</Button>
+            </div>
           </div>
           <div className={styles.previewContainer}>
             <Curriculum isMobile={true} {...globalState} />
