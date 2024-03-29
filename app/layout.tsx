@@ -1,12 +1,9 @@
-import { Navbar } from "@/components/navbar";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 import clsx from "clsx";
 import { Metadata } from "next";
-import { Providers } from "./providers";
-import Link from "next/link";
 import { Poppins } from "next/font/google";
-import AppContainer from '@/components/AppContainer'
+import { Providers } from "./providers";
 const poppinsFont = Poppins({
 	subsets: ["latin"],
 	weight: ["500", "600", "700"]

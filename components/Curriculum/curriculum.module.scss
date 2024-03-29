@@ -29,6 +29,10 @@
         flex-direction: row !important;
         justify-content: center;
         flex-wrap: wrap;
+
+        .items {
+          justify-content: center;
+        }
         .item {
           width: fit-content;
         }
@@ -51,7 +55,7 @@
   background: var(--page-color);
   border-radius: 8px;
   display: grid;
-  grid-template-columns: 2fr 4fr;
+  grid-template-columns: 3fr 5fr;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.205);
   overflow: hidden;
 }
@@ -178,7 +182,7 @@
     .items {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       flex-direction: row;
       flex-wrap: wrap;
       gap: 15px;
@@ -448,7 +452,7 @@
   }
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 960px) {
   .curriculumPage,
   .curriculumPageContainer {
     padding: 0;
@@ -519,6 +523,10 @@
     flex-direction: row !important;
     justify-content: center;
     flex-wrap: wrap;
+
+    .items {
+      justify-content: center !important;
+    }
     .item {
       width: fit-content;
     }

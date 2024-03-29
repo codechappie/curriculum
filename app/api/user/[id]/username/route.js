@@ -21,3 +21,16 @@ export async function PUT(req, { params }) {
 
     }
 }
+
+
+export async function GET(req, { params }) {
+    await dbConnect();
+    console.log("PARAMS", params)
+    try {
+        const user = await User.findOne({ username: params.username });
+        return Response.json({ success: true, user })
+    } catch (error) {
+        console.log(error)
+        return Response.json({ success: false });
+    }
+}

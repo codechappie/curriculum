@@ -16,10 +16,13 @@ const Curriculum = ({
     phoneNumber,
     profileDescription,
     socialNetworks,
-    academicEducation, }) => {
+    academicEducation,
+    skills,
+    workExperiences,
+    certificates }) => {
 
     return (
-        <AppContainer isNavbar={false} >
+        // <AppContainer isNavbar={false} >
             <div className={`${style.curriculumPage} ${isMobile && style.isMobile}`}>
                 <div className={style.curriculumPageContainer}>
                     <div className={style.personalInformation}>
@@ -78,159 +81,62 @@ const Curriculum = ({
                                         <small className={style.university}>
                                             {educationItem.shortDescription}
                                         </small>
-                                        <small>{moment(educationItem.startDate).format("DD MMM YYYY")} to {moment(educationItem.endDate).format("DD MMM YYYY")}</small>
+                                        <small>From {moment(educationItem.startDate).format("DD MMM YYYY")} to {moment(educationItem.endDate).format("DD MMM YYYY")}</small>
                                     </div>
                                 </div>))}
                             </div>
                         </div>)}
                         <div className={style.skills}>
-                            <h2 className={style.subTitle}>Habilidades</h2>
+                            <h2 className={style.subTitle}>Skills</h2>
                             <div className={style.items}>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>Next.js</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>HTML5</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>Lit-HTML</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>CSS3</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>JavaScript</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>TypeScript</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>React</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>Git y GitHub</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>Bootstrap</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>MongoDB</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>Diseño responsive</small>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <small>Backend básico</small>
-                                </div>
+                                {(skills && skills.length > 0 ? skills.map((skill) => (
+                                    <div className={style.item} key={skill.id}>
+                                        <div className={style.dot}></div>
+                                        <small>{skill.name}</small>
+                                    </div>
+                                )) : (
+                                    <div className={style.item}>
+                                        <div className={style.dot}></div>
+                                        <small>Enter your skills</small>
+                                    </div>))}
                             </div>
                         </div>
                     </div>
 
                     <div className={style.moreDetails}>
                         <div className={style.experience}>
-                            <h2 className={style.subTitle}>Experiencia laboral</h2>
+                            <h2 className={style.subTitle}>Work experiences</h2>
+
                             <div className={style.items}>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <div className={style.content}>
-                                        <h2 className={style.title}>Center Developer</h2>
-                                        <h3 className={style.company}>NTT DATA Europe & LATAM</h3>
-                                        <div className={style.date}>
-                                            Desde Agosto del 2021 hasta la actualidad
+                                {(workExperiences && workExperiences.length > 0) ? workExperiences.map((item) => (
+                                    <div className={style.item} key={item.id}>
+                                        <div className={style.dot}></div>
+                                        <div className={style.content}>
+                                            <h2 className={style.title}>{item.title}</h2>
+                                            <h3 className={style.company}>{item.company}</h3>
+                                            <div className={style.date}>
+                                                From {moment(item.startDate).format("DD MMM YYYY")} to {moment(item.endDate).format("DD MMM YYYY")}
+                                            </div>
+                                            <p className={style.description}>
+                                                {item.shortDescription}
+                                            </p>
                                         </div>
-                                        <p className={style.description}>
-                                            Junto a un equipo de tecnología conformado por personas de Perú y España,
-                                            Nos encontramos finalizando un proyecto de migración del aplicativo
-                                            web de la Red Eléctrica de España (REE).
-                                        </p>
                                     </div>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <div className={style.content}>
-                                        <h2 className={style.title}>Programador web</h2>
-                                        <h3 className={style.company}>ARCA DE PAPEL E.I.R.L.</h3>
-                                        <div className={style.date}>
-                                            Desde Noviembre del 2019 hasta el Julio del 2021
-                                        </div>
-                                        <p className={style.description}>
-                                            Encargado de diseñar y desarrollar interfaces responsivas.
-                                            Junto al equipo de sistemas se diseñó e implementó una
-                                            plataforma educativa con diferentes módulos que complementan
-                                            el aprendizaje de inicial, primaria y secundaria.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <div className={style.content}>
-                                        <h2 className={style.title}>Programador practicante</h2>
-                                        <h3 className={style.company}>GRUPO CÓMPINA S.A.C.</h3>
-                                        <div className={style.date}>
-                                            Desde Septiembre hasta Noviembre del 2019
-                                        </div>
-                                        <p className={style.description}>
-                                            En este cargo diseñé y desarrollé módulos para una
-                                            herramienta web administrativa de la empresa, además de
-                                            diseñar una página web para mostrar productos y hacer
-                                            cotizaciones.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className={style.item}>
-                                    <div className={style.dot}></div>
-                                    <div className={style.content}>
-                                        <h2 className={style.title}>Desarrollador web</h2>
-                                        <h3 className={style.company}>DESARROLLADOR FREELANCE</h3>
-                                        <div className={style.date}>
-                                            Desde Noviembre del 2018 hasta Noviembre del 2019
-                                        </div>
-                                        <p className={style.description}>
-                                            Ofrecía soluciones web a empresas medianas y pequeñas. Desde
-                                            páginas web informativas hasta asesoria de temas
-                                            relacionados con páginas o plataformas web.
-                                        </p>
-                                    </div>
-                                </div>
+
+                                )) : <h3>Enter work experiences</h3>}
                             </div>
                         </div>
                         <div className={style.certificates}>
                             <h2 className={style.subTitle}>Certificados</h2>
                             <div className={style.items}>
-                                <div className={style.item}>
-                                    <h2 className={style.title}>
-                                        III Congreso internacional de Arquitectura e Ingenierias:
-                                        Automatización, seguridad y sostenibilidad (2018)
-                                    </h2>
-                                    <p>
-                                        Nuestro país necesita actualizar información de un desarrollo
-                                        eficiente en el ámbito de la Ingeniería y Arquitectura para un
-                                        crecimiento sostenible.
-                                    </p>
-                                </div>
-                                <div className={style.item}>
-                                    <h2 className={style.title}>
-                                        Seminario de actualización profesional innovación (2015)
-                                    </h2>
-                                    <p>
-                                        Fomentar la investigación y difundir los conocimientos a
-                                        través de los avances de la ciencia y de la tecnología
-                                        relacionados con el desarrollo y la competitividad de la
-                                        Ingeniería en el Perú.
-                                    </p>
-                                </div>
+                                {(certificates && certificates.length > 0) && certificates.map((certificate) => (
+                                    <div className={style.item} key={certificate.id}>
+                                        <h2 className={style.title}>
+                                            {certificate.title} ({moment(certificate.date).format("DD MMM YYYY")})
+                                        </h2>
+                                        <p>{certificate.description}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className={style.interests}>
@@ -261,7 +167,7 @@ const Curriculum = ({
                     </div>
                 </div>
             </div>
-        </AppContainer>
+        // </AppContainer>
     )
 }
 

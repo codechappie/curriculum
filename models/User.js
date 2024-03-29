@@ -4,9 +4,19 @@ const UserSchema = new mongoose.Schema(
   {
     id: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
+    fullName: { type: String, required: true },
     profileImage: { type: String },
-    bio: { type: String, },
+    occupation: { type: String, },
+    address: { type: String, },
+    email: { type: String, },
+    phoneNumber: { type: String, },
+    profileDescription: { type: String, },
+    socialNetworks: { type: Array, },
+    academicEducation: { type: Array, },
+    skills: { type: Array, },
+    workExperiences: { type: Array, },
+    certificates: { type: Array, },
+    projects: { type: Array, },
   },
   { collection: "user" }
 );

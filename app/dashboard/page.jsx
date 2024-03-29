@@ -25,15 +25,34 @@ const AcademicEducationInitialValue = {
   endDate: "",
 }
 
+const SkillInitialValue = {
+  name: "",
+}
+
+const WorkExperiencesInitialValue = {
+  title: "",
+  company: "",
+  startDate: "",
+  endDate: "",
+  shortDescription: "",
+}
+
+const CertificatesInitialValue = {
+  title: "",
+  date: "",
+  description: "",
+}
+
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["3"]));
-  const [skills, setSkills] = useState(["HTML5"]);
-  const [currentSkill, setCurrentSkill] = useState("");
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
   const [currentAcademicEducation, setCurrentAcademicEducation] = useState(AcademicEducationInitialValue);
-
+  const [currentSkill, setCurrentSkill] = useState(SkillInitialValue);
+  const [currentWorkExperiences, setCurrentWorkExperiences] = useState(WorkExperiencesInitialValue);
+  const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [globalState, setGlobalState] = useState({
     profileImage: "",
@@ -45,106 +64,68 @@ const Dashboard = () => {
     profileDescription: "",
     socialNetworks: [],
     academicEducation: [],
+    skills: [],
+    workExperiences: [],
+    certificates: [],
   });
 
 
   useEffect(() => {
-    console.log("sess", session)
+    if (session.status === "loading") {
+      setIsLoading(true);
+    }
     if (session.status === "authenticated") {
-      getUserData(session.data.user.id)
+      getUserData(session.data.user.id);
+
     }
     if (session.status === "unauthenticated") return redirect("/login")
   }, [session.status]);
 
+
+  useEffect(() => {
+    if (user._id) {
+      setGlobalState(user)
+    }
+  }, [user]);
+
   const getUserData = (id) => {
+    setIsLoading(true);
     axios.get(`/api/user/${id}`).then(({ data }) => {
-      setUser(data.user)
-    });
+      data.success && setUser(data.user)
+    }).then(() => setIsLoading(false));
   }
 
-  const handleClose = (skillToRemove) => {
-    setSkills(skills.filter(skill => skill !== skillToRemove));
-  };
-
-  const addSkill = () => {
-    const skill = currentSkill.trim();
-    const found = skills.find(element => skill === element);
-    if (skill !== "" && !found) {
-      const skillsUpdated = [...skills, skill];
-      setSkills(skillsUpdated);
-    }
-    setCurrentSkill("")
-  }
-
-  const addSocialNetwork = () => {
-    console.log("VAL", currentSocialNetwork)
+  const handleAddObject = (globalArrayKey, currentObjValue, setCurrentValue, initialvalue) => {
     const unique_id = uuid();
 
-    const found = globalState.socialNetworks.find(element => currentSocialNetwork.id === element.id);
+    const found = globalState[globalArrayKey].find(element => currentObjValue.id === element.id);
 
     if (!found) {
-      const socialNetwork = { ...currentSocialNetwork, id: unique_id };
-      const socialNetworksUpdated = [...globalState.socialNetworks, socialNetwork];
-      handleChange(socialNetworksUpdated, "socialNetworks")
+      const object = { ...currentObjValue, id: unique_id };
+      const arrayUpdated = [...globalState[globalArrayKey], object];
+      handleChange(arrayUpdated, globalArrayKey)
     } else {
-      const filtered = globalState.socialNetworks.filter(element => currentSocialNetwork.id !== element.id);
-      const socialNetworksUpdated = [...filtered, currentSocialNetwork];
+      const filtered = globalState[globalArrayKey].filter(element => currentObjValue.id !== element.id);
+      const arrayUpdated = [...filtered, currentObjValue];
 
-      handleChange(socialNetworksUpdated, "socialNetworks")
+      handleChange(arrayUpdated, globalArrayKey)
     }
 
-
-
-    setCurrentSocialNetwork(SNSInitialValue);
+    setCurrentValue(initialvalue);
   }
 
-  const handleCloseSocialNetworks = (id) => {
-    handleChange(globalState.socialNetworks.filter(snsItem => snsItem.id !== id), "socialNetworks");
+  const handleEditObject = (globalArrayKey, setCurrentValue, id) => {
+    const found = globalState[globalArrayKey].find(item => item.id === id);
+    setCurrentValue(found)
+  }
+
+  const handleCloseObject = (globalArrayKey, id) => {
+    handleChange(globalState[globalArrayKey].filter(item => item.id !== id), globalArrayKey);
   };
-
-  const handleEditvalue = (id) => {
-    const found = globalState.socialNetworks.find(snsItem => snsItem.id === id);
-    setCurrentSocialNetwork(found)
-  }
-
-
-  const addAcademicEducation = () => {
-    const unique_id = uuid();
-
-    const found = globalState.academicEducation.find(element => currentAcademicEducation.id === element.id);
-
-    if (!found) {
-      const academicEducation = { ...currentAcademicEducation, id: unique_id };
-      const academicEducationUpdated = [...globalState.academicEducation, academicEducation];
-      handleChange(academicEducationUpdated, "academicEducation")
-    } else {
-      const filtered = globalState.academicEducation.filter(element => currentAcademicEducation.id !== element.id);
-      const academicEducationUpdated = [...filtered, currentAcademicEducation];
-
-      handleChange(academicEducationUpdated, "academicEducation")
-    }
-
-
-
-    setCurrentAcademicEducation(AcademicEducationInitialValue);
-  }
-
-  const handleCloseAcademicEducation = (id) => {
-    handleChange(globalState.academicEducation.filter(educationItem => educationItem.id !== id), "academicEducation");
-  };
-
-
-  const handleEditAcademicEducation = (id) => {
-    const found = globalState.academicEducation.find(academicItem => academicItem.id === id);
-    setCurrentAcademicEducation(found)
-  }
-
-
 
   // https://i.pravatar.cc/150?u=a04258114e29026702d
 
   const handleChange = (value, key) => {
-
     setGlobalState((state) => ({
       ...state,
       [key]: value
@@ -153,11 +134,14 @@ const Dashboard = () => {
   }
 
   const saveGlobalChanges = () => {
-    console.log("GLOBALSTATE", globalState)
+    console.log("GLOBALSTATE", globalState);
+
+    axios.put(`/api/user/${user.id}`, globalState)
+      .catch((error) => console.log(error));
   }
 
   return (
-    <AppContainer isFooter={false}>
+    <AppContainer isFooter={false} isLoading={isLoading}>
       <div className={styles.dashboardPage}>
         <div className={styles.container}>
           <div className={styles.formContainer}>
@@ -227,17 +211,18 @@ const Dashboard = () => {
                 <AccordionItem key="2" aria-label="Social networks" title="Social networks">
                   <div className={styles.socialNetworks}>
                     <SnsSelectInput
-                      handleAdd={addSocialNetwork}
+                      handleAdd={handleAddObject}
                       setValue={setCurrentSocialNetwork}
                       data={currentSocialNetwork}
+                      initialValue={SNSInitialValue}
                     />
                     <div className={styles.chips}>
                       {globalState.socialNetworks.map((snsItem, index) => (
                         <Chip
                           key={index}
                           startContent={<Icon className={styles.chipImg} id={snsItem.iconid} size={22} />}
-                          onDoubleClick={() => handleEditvalue(snsItem.id)}
-                          onClose={() => handleCloseSocialNetworks(snsItem.id)}
+                          onDoubleClick={() => handleEditObject("socialNetworks", setCurrentSocialNetwork, snsItem.id)}
+                          onClose={() => handleCloseObject("socialNetworks", snsItem.id)}
                           size='lg'
                           variant="flat">
                           {snsItem.name}
@@ -251,9 +236,10 @@ const Dashboard = () => {
                   title="Education">
                   <div className={styles.educationContainer}>
                     <EducationInput
-                      handleAdd={addAcademicEducation}
+                      handleAdd={handleAddObject}
                       setValue={setCurrentAcademicEducation}
                       data={currentAcademicEducation}
+                      initialValue={AcademicEducationInitialValue}
                     />
 
                     {(globalState.academicEducation && globalState.academicEducation.length > 0) && <Divider />}
@@ -263,8 +249,8 @@ const Dashboard = () => {
 
                           <Chip
                             key={index}
-                            onDoubleClick={() => handleEditAcademicEducation(educationItem.id)}
-                            onClose={() => handleCloseAcademicEducation(educationItem.id)}
+                            onDoubleClick={() => handleEditObject("academicEducation", setCurrentAcademicEducation, educationItem.id)}
+                            onClose={() => handleCloseObject("academicEducation", educationItem.id)}
                             size='lg'
                             variant="flat">
                             {educationItem.title}
@@ -280,20 +266,36 @@ const Dashboard = () => {
                   aria-label="Skills"
                   title="Skills">
                   <div className={styles.skillsContainer}>
-                    <div>
+                    <div className={styles.skillInput}>
                       <Input
                         type="text"
                         label="Skill"
-                        value={currentSkill}
-                        onChange={e => setCurrentSkill(e.target.value)}
+                        value={currentSkill.name}
+                        onChange={(e) => setCurrentSkill((state) => ({
+                          ...state,
+                          name: e.target.value
+                        }))}
                       />
-                      <Button onClick={() => addSkill()}>Add</Button>
+                      <Button
+                        color='secondary'
+                        className="h-unit-14"
+                        onClick={() => handleAddObject(
+                          "skills",
+                          currentSkill,
+                          setCurrentSkill,
+                          SkillInitialValue
+                        )}>Add</Button>
                     </div>
-                    {skills.map((skill, index) => (
-                      <Chip key={index} onClose={() => handleClose(skill)} variant="flat">
-                        {skill}
-                      </Chip>
-                    ))}
+                    <div className={styles.skills}>
+                      {globalState.skills.map((skill, index) => (
+                        <Chip key={index}
+                          onClose={() => handleCloseObject("skills", skill.id)}
+                          onDoubleClick={() => handleEditObject("skills", setCurrentSkill, skill.id)}
+                          variant="flat">
+                          {skill.name}
+                        </Chip>
+                      ))}
+                    </div>
                   </div>
                 </AccordionItem>
 
@@ -301,25 +303,49 @@ const Dashboard = () => {
                   aria-label="Work experience"
                   title="Work experience">
                   <div className={styles.workExperience}>
-                    <WorkExperienceInput />
-                    <Divider />
-                    <WorkExperienceInput />
-                    <Divider />
-                    <WorkExperienceInput />
+                    <WorkExperienceInput
+                      handleAdd={handleAddObject}
+                      setValue={setCurrentWorkExperiences}
+                      data={currentWorkExperiences}
+                      initialValue={WorkExperiencesInitialValue}
+                    />
+                    <div className={styles.skills}>
+                      {globalState.workExperiences.map((item, index) => (
+                        <Chip key={index}
+                          onClose={() => handleCloseObject("workExperiences", item.id)}
+                          onDoubleClick={() => handleEditObject("workExperiences", setCurrentWorkExperiences, item.id)}
+                          variant="flat">
+                          {item.title}
+                        </Chip>
+                      ))}
+                    </div>
                   </div>
                 </AccordionItem>
 
                 <AccordionItem key="6"
                   aria-label="Certificates"
                   title="Certificates">
-                  <div className={styles.workExperience}>
-                    <CertificatesInput />
-                    <Divider />
-                    <CertificatesInput />
+                  <div className={styles.certificatesContainer}>
+                    <CertificatesInput
+                      handleAdd={handleAddObject}
+                      setValue={setCurrentCertificates}
+                      data={currentCertificates}
+                      initialValue={CertificatesInitialValue}
+                    />
+                    <div className={styles.certificates}>
+                      {globalState.certificates.map((item, index) => (
+                        <Chip key={index}
+                          onClose={() => handleCloseObject("certificates", item.id)}
+                          onDoubleClick={() => handleEditObject("certificates", setCurrentCertificates, item.id)}
+                          variant="flat">
+                          {item.title}
+                        </Chip>
+                      ))}
+                    </div>
                   </div>
                 </AccordionItem>
 
-                <AccordionItem key="7"
+                {/* <AccordionItem key="7"
                   aria-label="Interests"
                   title="Interests">
                   <div className={styles.workExperience}>
@@ -328,7 +354,6 @@ const Dashboard = () => {
                         type="text"
                         label="Skill"
                         value={currentSkill}
-                        list='["text", "prueba"]'
                         onChange={e => setCurrentSkill(e.target.value)}
                       />
                       <Button onClick={() => addSkill()}>Add</Button>
@@ -342,7 +367,7 @@ const Dashboard = () => {
                       </Chip>
                     ))}
                   </div>
-                </AccordionItem>
+                </AccordionItem> */}
               </Accordion>
             </section>
             <Button
@@ -362,7 +387,7 @@ const Dashboard = () => {
 }
 
 
-const SnsSelectInput = ({ handleAdd, setValue, data }) => {
+const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
   const snsData = [
     {
 
@@ -447,7 +472,7 @@ const SnsSelectInput = ({ handleAdd, setValue, data }) => {
       <Button
         className={`w-full ${styles.fullField}`}
         color='secondary'
-        onClick={handleAdd}
+        onClick={() => handleAdd("socialNetworks", data, setValue, initialValue)}
       >
         Save Social Network
       </Button>
@@ -456,7 +481,7 @@ const SnsSelectInput = ({ handleAdd, setValue, data }) => {
 }
 
 
-const EducationInput = ({ handleAdd, setValue, data }) => {
+const EducationInput = ({ handleAdd, setValue, data, initialValue }) => {
   return (
     <div className={styles.educationInput}>
       <Input
@@ -501,7 +526,7 @@ const EducationInput = ({ handleAdd, setValue, data }) => {
       <Button
         className={`w-full ${styles.fullField}`}
         color='secondary'
-        onClick={handleAdd}
+        onClick={() => handleAdd("academicEducation", data, setValue, initialValue)}
       >
         Save
       </Button>
@@ -509,22 +534,116 @@ const EducationInput = ({ handleAdd, setValue, data }) => {
 }
 
 
-const WorkExperienceInput = () => {
+const WorkExperienceInput = ({ handleAdd, setValue, data, initialValue }) => {
   return (
     <div className={styles.workExperienceInput}>
-      <Input type="text" className={styles.fullField} label="Job title" />
-      <Input type="text" className={styles.fullField} label="Company" />
-      <Input type="month" label="Start date" />
-      <Input type="month" label="End date" />
-      <Textarea label="Description" className={styles.fullField} />
+      <Input
+        type="text"
+        className={styles.fullField}
+        label="Job title"
+        value={data.title}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          title: e.target.value
+        }))}
+      />
+      <Input
+        type="text"
+        className={styles.fullField}
+        label="Company"
+        value={data.company}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          company: e.target.value
+        }))}
+      />
+      <Input
+        type="date"
+        label="Start date"
+        value={data.startDate}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          startDate: e.target.value
+        }))}
+      />
+      <Input
+        type="date"
+        label="End date"
+        value={data.endDate}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          endDate: e.target.value
+        }))}
+      />
+      <Textarea
+        label="Description"
+        className={styles.fullField}
+        value={data.shortDescription}
+        maxLength={200}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          shortDescription: e.target.value
+        }))}
+      />
+
+      <Button
+        color='secondary'
+        className={styles.fullField}
+        onClick={() => handleAdd(
+          "workExperiences",
+          data,
+          setValue,
+          initialValue
+        )}
+      >Add work experience</Button>
     </div>)
 }
 
-const CertificatesInput = () => {
+const CertificatesInput = ({ handleAdd, data, setValue, initialValue }) => {
   return (
     <div className={styles.certificatesInput}>
-      <Input type="text" className={styles.fullField} label="Certificate title" />
-      <Textarea label="Description" className={styles.fullField} />
+      <div className={styles.titleAndDate}>
+        <Input
+          type="text"
+          label="Certificate title"
+          value={data.title}
+          maxLength={60}
+          onChange={(e) => setValue((state) => ({
+            ...state,
+            title: e.target.value
+          }))}
+        />
+        <Input
+          type="date"
+          label="Date"
+          value={data.date}
+          onChange={(e) => setValue((state) => ({
+            ...state,
+            date: e.target.value
+          }))}
+        />
+      </div>
+      <Textarea
+        label="Description"
+        className={styles.fullField}
+        value={data.description}
+        maxLength={120}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          description: e.target.value
+        }))}
+      />
+
+      <Button
+        color='secondary'
+        className={styles.fullField}
+        onClick={() => handleAdd(
+          "certificates",
+          data,
+          setValue,
+          initialValue
+        )}
+      >Add work experience</Button>
     </div>)
 }
 
