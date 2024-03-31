@@ -140,6 +140,16 @@
                         margin-bottom: 10px;
                     }
                 }
+                .projectsContainer {
+                    .items {
+                        margin-top: 20px;
+                    }
+                    .projectsInput {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                }
             }
             .buttons {
                 display: grid;

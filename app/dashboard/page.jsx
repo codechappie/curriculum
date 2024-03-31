@@ -44,16 +44,26 @@ const CertificatesInitialValue = {
   description: "",
 }
 
+const ProjectsInitialValue = {
+  imageUrl: "",
+  externalUrl: "",
+  title: "",
+  shortDescription: "",
+}
+
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["7"]));
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
   const [currentAcademicEducation, setCurrentAcademicEducation] = useState(AcademicEducationInitialValue);
   const [currentSkill, setCurrentSkill] = useState(SkillInitialValue);
   const [currentWorkExperiences, setCurrentWorkExperiences] = useState(WorkExperiencesInitialValue);
   const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
+  const [currentProjects, setCurrentProjects] = useState(ProjectsInitialValue);
+
   const [isLoading, setIsLoading] = useState(true);
+
 
   const [globalState, setGlobalState] = useState({
     profileImage: "",
@@ -68,6 +78,7 @@ const Dashboard = () => {
     skills: [],
     workExperiences: [],
     certificates: [],
+    projects: [],
   });
 
 
@@ -261,8 +272,6 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </AccordionItem>
-
-
                 <AccordionItem key="4"
                   aria-label="Skills"
                   title="Skills">
@@ -299,7 +308,6 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </AccordionItem>
-
                 <AccordionItem key="5"
                   aria-label="Work experience"
                   title="Work experience">
@@ -322,7 +330,6 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </AccordionItem>
-
                 <AccordionItem key="6"
                   aria-label="Certificates"
                   title="Certificates">
@@ -346,29 +353,32 @@ const Dashboard = () => {
                   </div>
                 </AccordionItem>
 
-                {/* <AccordionItem key="7"
-                  aria-label="Interests"
-                  title="Interests">
-                  <div className={styles.workExperience}>
-                    <div>
-                      <Input
-                        type="text"
-                        label="Skill"
-                        value={currentSkill}
-                        onChange={e => setCurrentSkill(e.target.value)}
-                      />
-                      <Button onClick={() => addSkill()}>Add</Button>
+
+                <AccordionItem key="7"
+                  aria-label="Projects"
+                  title="Projects">
+                  <div className={styles.projectsContainer}>
+
+                    <ProjectsInput
+                      handleAdd={handleAddObject}
+                      setValue={setCurrentProjects}
+                      data={currentProjects}
+                      initialValue={ProjectsInitialValue}
+                    />
+
+                    <div className={styles.items}>
+                      {globalState.projects.map((project, index) => (
+                        <Chip
+                          variant="faded"
+                          key={index}
+                          onClose={() => handleCloseObject("projects", project.id)}
+                          onDoubleClick={() => handleEditObject("projects", setCurrentProjects, project.id)}
+                        >  {project.title}
+                        </Chip>
+                      ))}
                     </div>
-                    {skills.map((skill, index) => (
-                      <Chip
-                        startContent={<GithubIcon size={18} />}
-                        variant="faded"
-                        key={index} onClose={() => handleClose(skill)}
-                      >  {skill}
-                      </Chip>
-                    ))}
                   </div>
-                </AccordionItem> */}
+                </AccordionItem>
               </Accordion>
             </section>
             <div className={styles.buttons}>
@@ -655,6 +665,61 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue }) => {
         className={styles.fullField}
         onClick={() => handleAdd(
           "certificates",
+          data,
+          setValue,
+          initialValue
+        )}
+      >Add work experience</Button>
+    </div>)
+}
+
+const ProjectsInput = ({ handleAdd, data, setValue, initialValue }) => {
+  return (
+    <div className={styles.projectsInput}>
+      <Input
+        type="text"
+        label="External URL"
+        value={data.externalUrl}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          externalUrl: e.target.value
+        }))}
+      />
+      <Input
+        type="text"
+        label="Image URL"
+        value={data.imageUrl}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          imageUrl: e.target.value
+        }))}
+      />
+      <Input
+        type="text"
+        label="Title"
+        value={data.title}
+        maxLength={60}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          title: e.target.value
+        }))}
+      />
+      <Textarea
+        label="Short description"
+        className={styles.fullField}
+        value={data.shortDescription}
+        maxLength={120}
+        onChange={(e) => setValue((state) => ({
+          ...state,
+          shortDescription: e.target.value
+        }))}
+      />
+
+      <Button
+        color='secondary'
+        className={styles.fullField}
+        onClick={() => handleAdd(
+          "projects",
           data,
           setValue,
           initialValue

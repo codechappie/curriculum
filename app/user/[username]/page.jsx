@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { Spinner } from '@nextui-org/react';
 
 const Page = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const params = useParams()
 
     const [globalState, setGlobalState] = useState({
@@ -22,7 +23,6 @@ const Page = () => {
         workExperiences: [],
         certificates: [],
     });
-    const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState({});
 
     useEffect(() => {
@@ -42,12 +42,12 @@ const Page = () => {
         }).then(() => setIsLoading(false));
     }
 
-    if (isLoading) {
-        return <Spinner className='spinner' />
-    }
+    // if (isLoading) {
+    //     return <Spinner className='spinner' />
+    // }
 
     return (
-        <Curriculum isMobile={false} {...globalState} />
+        <Curriculum isMobile={false} isLoading={isLoading} {...globalState} />
     )
 }
 
