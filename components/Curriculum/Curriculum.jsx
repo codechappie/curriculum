@@ -95,16 +95,17 @@ const Curriculum = ({
                     {(academicEducation && academicEducation.length > 0) ? (<div className={style.education}>
                         <h2 className={style.subTitle}>Academic education</h2>
                         <div className={style.items}>
-                            {academicEducation.map((educationItem) => (<div key={educationItem.id} className={style.item}>
-                                <div className={style.dot}></div>
-                                <div className={style.content}>
-                                    <h2 className={style.title}>{educationItem.title}</h2>
-                                    <small className={style.university}>
-                                        {educationItem.shortDescription}
-                                    </small>
-                                    <small>From {moment(educationItem.startDate).format("DD MMM YYYY")} to {moment(educationItem.endDate).format("DD MMM YYYY")}</small>
-                                </div>
-                            </div>))}
+                            {academicEducation.map((educationItem) => (
+                                <div key={educationItem.id} className={style.item}>
+                                    <div className={style.dot}></div>
+                                    <div className={style.content}>
+                                        <h2 className={style.title}>{educationItem.title}</h2>
+                                        <small className={style.university}>
+                                            {educationItem.shortDescription}
+                                        </small>
+                                        <small>From {moment(educationItem.startDate).format("DD MMM YYYY")} to {moment(educationItem.endDate).format("DD MMM YYYY")}</small>
+                                    </div>
+                                </div>))}
                         </div>
                     </div>) : (<div className={style.education}>
                         <h2 className={style.subTitle}>Academic education</h2>
@@ -210,9 +211,9 @@ const Curriculum = ({
                         <h2 className={style.subTitle}>Projects</h2>
                         <div className={style.items}>
                             {(projects && projects.length > 0) ? projects.map((project) => (
-                                <Link href={project.externalUrl} className={style.item}>
+                                <Link href={project.externalUrl} className={style.item} key={project.id}>
                                     <div className={style.image}>
-                                        <img src={project.imageUrl} alt="" />
+                                        <img src={project.imageUrl} alt={project.name} />
                                     </div>
                                     <h3>{project.title}</h3>
                                     <p>
