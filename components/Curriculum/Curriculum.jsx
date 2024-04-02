@@ -23,8 +23,9 @@ const Curriculum = ({
     skills,
     workExperiences,
     certificates,
-    projects }) => {
-
+    projects,
+    displaySections }) => {
+    console.log("DS", displaySections)
     return (
         <div className={`${style.curriculumPage} ${isMobile && style.isMobile}`}>
             <div className={style.curriculumPageContainer}>
@@ -84,7 +85,7 @@ const Curriculum = ({
                         </div>
                     </div>)}
                     <div className={style.profile}>
-                        <h2 className={style.subTitle}>Profile</h2>
+                        <h2 className={style.subTitle}>Professional Summary</h2>
                         {profileDescription ? <p>profileDescription </p> : (<div>
                             <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
                             <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
@@ -184,7 +185,7 @@ const Curriculum = ({
                             ))}
                         </div>
                     </div>
-                    <div className={style.certificates}>
+                    {(displaySections && displaySections.certificates) && <div className={style.certificates}>
                         <h2 className={style.subTitle}>Certificados</h2>
                         <div className={style.items}>
                             {(certificates && certificates.length > 0) ? certificates.map((certificate) => (
@@ -206,7 +207,7 @@ const Curriculum = ({
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div>}
                     <div className={style.projects}>
                         <h2 className={style.subTitle}>Projects</h2>
                         <div className={style.items}>

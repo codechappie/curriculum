@@ -3,7 +3,7 @@ import AppContainer from '@/components/AppContainer';
 import Curriculum from '@/components/Curriculum/Curriculum';
 import Icon from '@/components/Icon';
 import { DiscordIcon, GithubIcon, TwitterIcon } from '@/components/icons';
-import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Textarea } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Switch, Textarea } from '@nextui-org/react';
 import axios from 'axios';
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -51,16 +51,22 @@ const ProjectsInitialValue = {
   shortDescription: "",
 }
 
+const DisplaySectionsInitialValue = {
+  certificates: false,
+  projects: true,
+}
+
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["6"]));
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
   const [currentAcademicEducation, setCurrentAcademicEducation] = useState(AcademicEducationInitialValue);
   const [currentSkill, setCurrentSkill] = useState(SkillInitialValue);
   const [currentWorkExperiences, setCurrentWorkExperiences] = useState(WorkExperiencesInitialValue);
   const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
   const [currentProjects, setCurrentProjects] = useState(ProjectsInitialValue);
+  const [currentDisplaySections, setCurrentDisplaySections] = useState(DisplaySectionsInitialValue);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -79,6 +85,7 @@ const Dashboard = () => {
     workExperiences: [],
     certificates: [],
     projects: [],
+    displaySections: {}
   });
 
 
@@ -96,9 +103,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user._id) {
-      setGlobalState(user)
+      console.log("USER", user)
+      setCurrentDisplaySections(user.displaySections);
+      setGlobalState(user);
     }
   }, [user]);
+
 
   const getUserData = (id) => {
     setIsLoading(true);
@@ -334,18 +344,36 @@ const Dashboard = () => {
                   aria-label="Certificates"
                   title="Certificates">
                   <div className={styles.certificatesContainer}>
+                    <div className="mb-4">
+                      <Switch defaultSelected={globalState.displaySections.certificates}
+                      checked={globalState.displaySections.certificates}
+                      // onChange={(e) => {
+                      //   setCurrentDisplaySections((state) => ({
+                      //     ...state,
+                      //     certificates: e.target.checked
+                      //   }));
+
+                      //   handleChange(currentDisplaySections, "displaySections");
+                      // }}
+                      >
+                        {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
+                      </Switch>
+                    </div>
                     <CertificatesInput
                       handleAdd={handleAddObject}
                       setValue={setCurrentCertificates}
                       data={currentCertificates}
                       initialValue={CertificatesInitialValue}
+                      showCertificates={currentDisplaySections.certificates}
                     />
                     <div className={styles.certificates}>
                       {globalState.certificates.map((item, index) => (
                         <Chip key={index}
-                          onClose={() => handleCloseObject("certificates", item.id)}
-                          onDoubleClick={() => handleEditObject("certificates", setCurrentCertificates, item.id)}
-                          variant="flat">
+                          className={`${currentDisplaySections.certificates ? "opacity-100" : "opacity-50"}`}
+                          onClose={() => currentDisplaySections.certificates && handleCloseObject("certificates", item.id)}
+                          onDoubleClick={() => currentDisplaySections.certificates && handleEditObject("certificates", setCurrentCertificates, item.id)}
+                          variant="flat"
+                        >
                           {item.title}
                         </Chip>
                       ))}
@@ -624,50 +652,56 @@ const WorkExperienceInput = ({ handleAdd, setValue, data, initialValue }) => {
     </div>)
 }
 
-const CertificatesInput = ({ handleAdd, data, setValue, initialValue }) => {
+const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertificates }) => {
   return (
     <div className={styles.certificatesInput}>
       <div className={styles.titleAndDate}>
         <Input
           type="text"
           label="Certificate title"
+          className={`${showCertificates ? "opacity-100" : "opacity-50"}`}
           value={data.title}
           maxLength={60}
           onChange={(e) => setValue((state) => ({
             ...state,
             title: e.target.value
           }))}
+          readOnly={!showCertificates}
         />
         <Input
           type="date"
           label="Date"
+          className={`${showCertificates ? "opacity-100" : "opacity-50"}`}
           value={data.date}
           onChange={(e) => setValue((state) => ({
             ...state,
             date: e.target.value
           }))}
+          readOnly={!showCertificates}
         />
       </div>
       <Textarea
         label="Description"
-        className={styles.fullField}
+        className={`${styles.fullField} ${showCertificates ? "opacity-100" : "opacity-50"}`}
         value={data.description}
         maxLength={120}
         onChange={(e) => setValue((state) => ({
           ...state,
           description: e.target.value
         }))}
+        readOnly={!showCertificates}
       />
 
       <Button
         color='secondary'
-        className={styles.fullField}
+        className={`${styles.fullField} ${showCertificates ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         onClick={() => handleAdd(
           "certificates",
           data,
           setValue,
           initialValue
         )}
+        disabled={!showCertificates}
       >Add work experience</Button>
     </div>)
 }

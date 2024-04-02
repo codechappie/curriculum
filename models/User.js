@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema(
     workExperiences: { type: Array, },
     certificates: { type: Array, },
     projects: { type: Array, },
+    displaySections: { type: Object, },
   },
   { collection: "user" }
 );
