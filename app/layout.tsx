@@ -36,7 +36,7 @@ export default function RootLayout({
 			<head />
 			<body
 				className={clsx(
-					"min-h-screen bg-background font-poppins",
+					"bg-background font-poppins",
 					poppinsFont.className
 				)}
 			>
