@@ -13,7 +13,7 @@ import { v4 as uuid } from "uuid";
 import styles from './dashboard.module.scss';
 import JSConfetti from 'js-confetti'
 
-const jsConfetti = new JSConfetti()
+const jsConfetti = new JSConfetti();
 
 const SNSInitialValue = {
   iconid: "",
