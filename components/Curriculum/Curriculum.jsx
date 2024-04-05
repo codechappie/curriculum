@@ -25,7 +25,6 @@ const Curriculum = ({
     certificates,
     projects,
     displaySections }) => {
-    console.log("DS", displaySections)
     return (
         <div className={`${style.curriculumPage} ${isMobile && style.isMobile}`}>
             <div className={style.curriculumPageContainer}>
@@ -185,40 +184,23 @@ const Curriculum = ({
                             ))}
                         </div>
                     </div>
-                    {(displaySections && displaySections.certificates) && <div className={style.certificates}>
+                    {((displaySections && displaySections.certificates)) && <div className={style.certificates}>
                         <h2 className={style.subTitle}>Certificates</h2>
                         <div className={style.items}>
-                            {(certificates && certificates.length > 0) && certificates.map((certificate) => (
+                            {(certificates && certificates.length > 0) ? certificates.map((certificate) => (
                                 <div className={style.item} key={certificate.id}>
                                     <h2 className={style.title}>
                                         {certificate.title} ({moment(certificate.date).format("DD MMM YYYY")})
                                     </h2>
                                     <p>{certificate.description}</p>
                                 </div>
-                            ))}
+                            )) : <CertificateSkeleton />}
                         </div>
                     </div>}
-                    {isLoading && <div className={style.certificates}>
-                        <h2 className={style.subTitle}>
-                            <Skeleton className="rounded-lg w-1/6 h-6 mt-1"></Skeleton>
-                        </h2>
-                        <div className={style.items}>
-                            {[1].map((certificate) => (
-                                <div className={style.item} key={certificate}>
-                                    <h2 className={style.title}>
-                                        <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
-                                    </h2>
-                                    <div>
-                                        <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
-                                        <Skeleton className="rounded-lg w-8/12 h-6 mt-1"></Skeleton>
-                                    </div>
-                                </div>
+                    {isLoading && <CertificateSkeleton />}
 
-                            ))}
-                        </div>
-                    </div>
-                    }
-                    <div className={style.projects}>
+
+                    {(displaySections && displaySections.projects) && <div className={style.projects}>
                         <h2 className={style.subTitle}>Projects</h2>
                         <div className={style.items}>
                             {(projects && projects.length > 0) ? projects.map((project) => (
@@ -230,20 +212,57 @@ const Curriculum = ({
                                     <p>
                                         {project.shortDescription}
                                     </p>
-                                </Link>)) : [1, 2].map((project) => (
-                                    <div className={style.item} key={project}>
-                                        <div className={style.image}>
-                                            <Skeleton className="rounded-lg aspect-video mt-1"></Skeleton>
-                                        </div>
-                                        <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
-                                        <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
-                                    </div>))}
+                                </Link>)) : <ProjectSkeleton type="simple" />}
                         </div>
-                    </div>
+                    </div>}
+                    {isLoading && <ProjectSkeleton type='filled' />}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
+
+const CertificateSkeleton = () => {
+    return <div className={style.certificates}>
+        <div className={style.items}>
+            {[1].map((certificate) => (
+                <div className={style.item} key={certificate}>
+                    <h2 className={style.title}>
+                        <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+                    </h2>
+                    <div>
+                        <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+                        <Skeleton className="rounded-lg w-8/12 h-6 mt-1"></Skeleton>
+                    </div>
+                </div>
+
+            ))}
+        </div>
+    </div>
+}
+
+
+const ProjectSkeleton = ({ type = "simple" }) => {
+
+    const projects = [1, 2].map((project) => (
+        <div className={style.item} key={project}>
+            <div className={style.image}>
+                <Skeleton className="rounded-lg aspect-video mt-1"></Skeleton>
+            </div>
+            <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+            <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+        </div>))
+
+
+    if (type === "simple") return projects;
+
+    if (type === "filled") return <div className={style.projects}>
+        <h2 className={style.subTitle}>Projects</h2>
+        <div className={style.items}>
+            {projects}
+        </div>
+    </div>
+}
+
 
 export default Curriculum

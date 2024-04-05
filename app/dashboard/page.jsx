@@ -3,14 +3,14 @@ import AppContainer from '@/components/AppContainer';
 import Curriculum from '@/components/Curriculum/Curriculum';
 import Icon from '@/components/Icon';
 import { DiscordIcon, GithubIcon, TwitterIcon } from '@/components/icons';
-import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Switch, Textarea, Tooltip } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Switch, Textarea } from '@nextui-org/react';
 import axios from 'axios';
 import { useSession } from "next-auth/react";
+import Link from 'next/link';
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from './dashboard.module.scss';
-import Link from 'next/link';
 
 const SNSInitialValue = {
   iconid: "",
@@ -51,25 +51,17 @@ const ProjectsInitialValue = {
   shortDescription: "",
 }
 
-const DisplaySectionsInitialValue = {
-  certificates: false,
-  projects: true,
-}
-
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["6"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["2"]));
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
   const [currentAcademicEducation, setCurrentAcademicEducation] = useState(AcademicEducationInitialValue);
   const [currentSkill, setCurrentSkill] = useState(SkillInitialValue);
   const [currentWorkExperiences, setCurrentWorkExperiences] = useState(WorkExperiencesInitialValue);
   const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
   const [currentProjects, setCurrentProjects] = useState(ProjectsInitialValue);
-  const [currentDisplaySections, setCurrentDisplaySections] = useState(DisplaySectionsInitialValue);
-
   const [isLoading, setIsLoading] = useState(true);
-
 
   const [globalState, setGlobalState] = useState({
     profileImage: "",
@@ -104,7 +96,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (user._id) {
       console.log("USER", user)
-      setCurrentDisplaySections(user.displaySections);
       setGlobalState(user);
     }
   }, [user]);
@@ -175,12 +166,13 @@ const Dashboard = () => {
                 <AccordionItem key="1" aria-label="Basic Information" title="Basic Information">
                   <div className={styles.basicInformation}>
                     <div className={styles.userProfile}>
+                      {/* TODO: ADD IMAGE PUBLIC */}
                       <img src={globalState.profileImage || "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"} alt="" />
                       <Input
                         type="text"
                         label="URL image"
                         value={globalState.profileImage}
-                        onChange={(e) => handleChange(e.target.value, "profileImage")}
+                        onChange={(e) => { handleChange(e.target.value, "profileImage") }}
                       />
                     </div>
                     <Input
@@ -344,26 +336,21 @@ const Dashboard = () => {
                   aria-label="Certificates"
                   title="Certificates">
                   <div className={styles.certificatesContainer}>
-                    <Tooltip
-                      key="switch-info"
-                      placement="right-start"
-                      content="Don't forget save"
-                      color="primary"
-                    ><div className="w-fit mb-4">
+                    <div className="w-fit mb-4">
 
-                        <Switch
-                          isSelected={globalState.displaySections.certificates}
-                          onChange={(e) => {
-                            handleChange({
-                              ...globalState.displaySections,
-                              certificates: e.target.checked
-                            }, "displaySections");
-                          }}
-                        >
-                          {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
-                        </Switch>
-                      </div>
-                    </Tooltip>
+                      <Switch
+                        isSelected={globalState.displaySections.certificates}
+                        onChange={(e) => {
+                          handleChange({
+                            ...globalState.displaySections,
+                            certificates: e.target.checked
+                          }, "displaySections");
+                        }}
+                      >
+                        {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
+                      </Switch>
+                    </div>
+
                     <CertificatesInput
                       handleAdd={handleAddObject}
                       setValue={setCurrentCertificates}
@@ -391,12 +378,26 @@ const Dashboard = () => {
                   aria-label="Projects"
                   title="Projects">
                   <div className={styles.projectsContainer}>
+                    <div className="w-fit mb-4">
 
+                      <Switch
+                        isSelected={globalState.displaySections.projects}
+                        onChange={(e) => {
+                          handleChange({
+                            ...globalState.displaySections,
+                            projects: e.target.checked
+                          }, "displaySections");
+                        }}
+                      >
+                        {globalState.displaySections.projects ? "Show" : "Hide"} projects
+                      </Switch>
+                    </div>
                     <ProjectsInput
                       handleAdd={handleAddObject}
                       setValue={setCurrentProjects}
                       data={currentProjects}
                       initialValue={ProjectsInitialValue}
+                      showProjects={globalState.displaySections.projects}
                     />
                     <div className={styles.items}>
                       {globalState.projects.map((project, index) => (
@@ -419,7 +420,6 @@ const Dashboard = () => {
                 target='_blank'
                 href={`/user/${user.username}`}
               ><Button
-                
                 className='w-full button lg:text-medium md:text-small sm:text-xs'
                 color='success'
               >
@@ -427,7 +427,7 @@ const Dashboard = () => {
                 </Button></Link>
 
               <Button
-                
+
                 className='w-full lg:text-medium md:text-small sm:text-xs'
                 color='primary'
                 onClick={saveGlobalChanges}
@@ -445,6 +445,7 @@ const Dashboard = () => {
 
 
 const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
+  const [buttonIsAvailable, setButtonAvailable] = useState(false);
   const snsData = [
     {
 
@@ -462,7 +463,18 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
       name: "Twitter",
       avatar: <TwitterIcon />
     }
-  ]
+  ];
+
+  useEffect(() => {
+    const { iconid, name, url } = data;
+    if (iconid.trim() !== "" && name.trim() !== "" && url.trim() !== "") {
+      setButtonAvailable(true)
+    } else {
+      setButtonAvailable(false)
+    }
+
+  }, [data]);
+
   return (
     <div className={styles.snsInput}>
       <Select
@@ -476,8 +488,7 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
             ...state,
             iconid: e.target.value
           }))
-        }
-        }
+        }}
         classNames={{
           trigger: "h-14",
         }}
@@ -527,9 +538,10 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
         }))}
       />
       <Button
-        className={`w-full ${styles.fullField}`}
+        className={`${styles.fullField} w-full ${buttonIsAvailable ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         color='secondary'
         onClick={() => handleAdd("socialNetworks", data, setValue, initialValue)}
+        disabled={!buttonIsAvailable}
       >
         Save Social Network
       </Button>
@@ -712,57 +724,65 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertif
     </div>)
 }
 
-const ProjectsInput = ({ handleAdd, data, setValue, initialValue }) => {
+const ProjectsInput = ({ handleAdd, data, setValue, initialValue, showProjects }) => {
   return (
     <div className={styles.projectsInput}>
       <Input
         type="text"
         label="External URL"
         value={data.externalUrl}
+        className={`${showProjects ? "opacity-100" : "opacity-50"}`}
         onChange={(e) => setValue((state) => ({
           ...state,
           externalUrl: e.target.value
         }))}
+        readOnly={!showProjects}
       />
       <Input
         type="text"
         label="Image URL"
+        className={`${showProjects ? "opacity-100" : "opacity-50"}`}
         value={data.imageUrl}
         onChange={(e) => setValue((state) => ({
           ...state,
           imageUrl: e.target.value
         }))}
+        readOnly={!showProjects}
       />
       <Input
         type="text"
         label="Title"
+        className={`${showProjects ? "opacity-100" : "opacity-50"}`}
         value={data.title}
         maxLength={60}
         onChange={(e) => setValue((state) => ({
           ...state,
           title: e.target.value
         }))}
+        readOnly={!showProjects}
       />
       <Textarea
         label="Short description"
-        className={styles.fullField}
+        className={`${showProjects ? "opacity-100" : "opacity-50"} ${styles.fullField}`}
         value={data.shortDescription}
         maxLength={120}
         onChange={(e) => setValue((state) => ({
           ...state,
           shortDescription: e.target.value
         }))}
+        readOnly={!showProjects}
       />
 
       <Button
         color='secondary'
-        className={styles.fullField}
+        className={`${styles.fullField} ${showProjects ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         onClick={() => handleAdd(
           "projects",
           data,
           setValue,
           initialValue
         )}
+        disabled={!showProjects}
       >Add work experience</Button>
     </div>)
 }
