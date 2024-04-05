@@ -4,6 +4,14 @@
     margin: 0 auto;
     margin-top: 20px;
 
+    .conffetiContainer {
+        position: fixed;
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+    }
+
     .container {
         display: grid;
         gap: 10px;

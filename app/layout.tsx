@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 		shortcut: "/favicon-16x16.png",
 		apple: "/apple-touch-icon.png",
 	},
+	viewport: { width: "device-width", initialScale: 1, maximumScale: 1, minimumScale: 1 }
 };
 
 export default function RootLayout({
@@ -33,9 +34,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<head>
-				<meta name='viewport' content='width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0' />
-			</head>
+			<head />
 			<body
 				className={clsx(
 					"bg-background font-poppins",
