@@ -3,7 +3,7 @@ import AppContainer from '@/components/AppContainer';
 import Curriculum from '@/components/Curriculum/Curriculum';
 import Icon from '@/components/Icon';
 import { DiscordIcon, GithubIcon, TwitterIcon } from '@/components/icons';
-import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Switch, Textarea } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Switch, Textarea, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -344,34 +344,39 @@ const Dashboard = () => {
                   aria-label="Certificates"
                   title="Certificates">
                   <div className={styles.certificatesContainer}>
-                    <div className="mb-4">
-                      <Switch defaultSelected={globalState.displaySections.certificates}
-                      checked={globalState.displaySections.certificates}
-                      // onChange={(e) => {
-                      //   setCurrentDisplaySections((state) => ({
-                      //     ...state,
-                      //     certificates: e.target.checked
-                      //   }));
+                    <Tooltip
+                      key="switch-info"
+                      placement="right-start"
+                      content="Don't forget save"
+                      color="primary"
+                    ><div className="w-fit mb-4">
 
-                      //   handleChange(currentDisplaySections, "displaySections");
-                      // }}
-                      >
-                        {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
-                      </Switch>
-                    </div>
+                        <Switch
+                          isSelected={globalState.displaySections.certificates}
+                          onChange={(e) => {
+                            handleChange({
+                              ...globalState.displaySections,
+                              certificates: e.target.checked
+                            }, "displaySections");
+                          }}
+                        >
+                          {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
+                        </Switch>
+                      </div>
+                    </Tooltip>
                     <CertificatesInput
                       handleAdd={handleAddObject}
                       setValue={setCurrentCertificates}
                       data={currentCertificates}
                       initialValue={CertificatesInitialValue}
-                      showCertificates={currentDisplaySections.certificates}
+                      showCertificates={globalState.displaySections.certificates}
                     />
                     <div className={styles.certificates}>
                       {globalState.certificates.map((item, index) => (
                         <Chip key={index}
-                          className={`${currentDisplaySections.certificates ? "opacity-100" : "opacity-50"}`}
-                          onClose={() => currentDisplaySections.certificates && handleCloseObject("certificates", item.id)}
-                          onDoubleClick={() => currentDisplaySections.certificates && handleEditObject("certificates", setCurrentCertificates, item.id)}
+                          className={`${globalState.displaySections.certificates ? "opacity-100" : "opacity-50"}`}
+                          onClose={() => globalState.displaySections.certificates && handleCloseObject("certificates", item.id)}
+                          onDoubleClick={() => globalState.displaySections.certificates && handleEditObject("certificates", setCurrentCertificates, item.id)}
                           variant="flat"
                         >
                           {item.title}
@@ -411,23 +416,22 @@ const Dashboard = () => {
             <div className={styles.buttons}>
               <Link
                 className='w-full button'
-                size='lg'
                 target='_blank'
                 href={`/user/${user.username}`}
               ><Button
-                size='lg'
-                className='w-full button'
+                
+                className='w-full button lg:text-medium md:text-small sm:text-xs'
                 color='success'
               >
                   See preview
                 </Button></Link>
 
               <Button
-                className='w-full'
+                
+                className='w-full lg:text-medium md:text-small sm:text-xs'
                 color='primary'
-                size='lg'
                 onClick={saveGlobalChanges}
-              >Save changes</Button>
+              >Save all changes</Button>
             </div>
           </div>
           <div className={styles.previewContainer}>
@@ -435,7 +439,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </AppContainer>
+    </AppContainer >
   )
 }
 
@@ -695,12 +699,14 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertif
       <Button
         color='secondary'
         className={`${styles.fullField} ${showCertificates ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
-        onClick={() => handleAdd(
-          "certificates",
-          data,
-          setValue,
-          initialValue
-        )}
+        onClick={() => {
+          handleAdd(
+            "certificates",
+            data,
+            setValue,
+            initialValue
+          )
+        }}
         disabled={!showCertificates}
       >Add work experience</Button>
     </div>)

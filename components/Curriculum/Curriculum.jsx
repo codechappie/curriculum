@@ -186,16 +186,24 @@ const Curriculum = ({
                         </div>
                     </div>
                     {(displaySections && displaySections.certificates) && <div className={style.certificates}>
-                        <h2 className={style.subTitle}>Certificados</h2>
+                        <h2 className={style.subTitle}>Certificates</h2>
                         <div className={style.items}>
-                            {(certificates && certificates.length > 0) ? certificates.map((certificate) => (
+                            {(certificates && certificates.length > 0) && certificates.map((certificate) => (
                                 <div className={style.item} key={certificate.id}>
                                     <h2 className={style.title}>
                                         {certificate.title} ({moment(certificate.date).format("DD MMM YYYY")})
                                     </h2>
                                     <p>{certificate.description}</p>
                                 </div>
-                            )) : [1].map((certificate) => (
+                            ))}
+                        </div>
+                    </div>}
+                    {isLoading && <div className={style.certificates}>
+                        <h2 className={style.subTitle}>
+                            <Skeleton className="rounded-lg w-1/6 h-6 mt-1"></Skeleton>
+                        </h2>
+                        <div className={style.items}>
+                            {[1].map((certificate) => (
                                 <div className={style.item} key={certificate}>
                                     <h2 className={style.title}>
                                         <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
@@ -205,9 +213,11 @@ const Curriculum = ({
                                         <Skeleton className="rounded-lg w-8/12 h-6 mt-1"></Skeleton>
                                     </div>
                                 </div>
+
                             ))}
                         </div>
-                    </div>}
+                    </div>
+                    }
                     <div className={style.projects}>
                         <h2 className={style.subTitle}>Projects</h2>
                         <div className={style.items}>
