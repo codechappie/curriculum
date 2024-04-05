@@ -11,6 +11,9 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from './dashboard.module.scss';
+import JSConfetti from 'js-confetti'
+
+const jsConfetti = new JSConfetti()
 
 const SNSInitialValue = {
   iconid: "",
@@ -151,6 +154,11 @@ const Dashboard = () => {
 
     axios.put(`/api/user/${user.id}`, globalState)
       .catch((error) => console.log(error));
+
+    jsConfetti.addConfetti({
+      emojis: ['🥳', '🎉', '🎊', '💥', '✨'],
+      confettiNumber: 30,
+    })
   }
 
   return (
