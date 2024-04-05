@@ -33,7 +33,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<head />
+			<head>
+				<meta name='viewport' content='width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0' />
+			</head>
 			<body
 				className={clsx(
 					"bg-background font-poppins",
@@ -42,7 +44,7 @@ export default function RootLayout({
 			>
 
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-						{children}
+					{children}
 				</Providers>
 
 			</body>
