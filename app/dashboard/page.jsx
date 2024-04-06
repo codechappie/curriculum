@@ -106,8 +106,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const jsConfetti = new JSConfetti();
-    setConfetti(jsConfetti)
-    // jsConfetti.addConfetti();
+    setConfetti(jsConfetti);
   }, []);
 
   const getUserData = (id) => {
@@ -145,8 +144,6 @@ const Dashboard = () => {
   const handleCloseObject = (globalArrayKey, id) => {
     handleChange(globalState[globalArrayKey].filter(item => item.id !== id), globalArrayKey);
   };
-
-  // https://i.pravatar.cc/150?u=a04258114e29026702d
 
   const handleChange = (value, key) => {
     setGlobalState((state) => ({
@@ -207,7 +204,7 @@ const Dashboard = () => {
                       type="text"
                       label="Full address"
                       className={styles.fullField}
-                      maxLength={42}
+                      maxLength={50}
                       value={globalState.address}
                       onChange={(e) => handleChange(e.target.value, "address")}
                     />
@@ -451,18 +448,56 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
 
       iconid: "github",
       name: "Github",
-      avatar: <GithubIcon />
+    },
+    {
+
+      iconid: "facebook",
+      name: "Facebook",
     },
     {
       iconid: "discord",
       name: "Discord",
-      avatar: <DiscordIcon />
     },
     {
       iconid: "twitter",
       name: "Twitter",
-      avatar: <TwitterIcon />
-    }
+    },
+    {
+      iconid: "instagram",
+      name: "Instagram",
+    },
+    {
+      iconid: "tiktok",
+      name: "TikTok",
+    },
+    {
+      iconid: "linkedin",
+      name: "LinkedIn",
+    },
+    {
+      iconid: "twitch",
+      name: "Twitch",
+    },
+    {
+      iconid: "youtube",
+      name: "YouTube",
+    },
+    {
+      iconid: "spotify",
+      name: "Spotify",
+    },
+    {
+      iconid: "dribbble",
+      name: "Dribbble",
+    },
+    {
+      iconid: "soundcloud",
+      name: "SoundCloud"
+    },
+    {
+      iconid: "other",
+      name: "Other",
+    },
   ];
 
   useEffect(() => {
@@ -495,7 +530,7 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
         renderValue={(items) => {
           return items.map((item, index) => (
             <div key={index} className="flex items-center gap-2">
-              {item.data.avatar}
+              <Icon id={item.data.iconid} className="bwIcon" />
 
               <div className="flex flex-col">
                 <span>{item.data.name}</span>
@@ -505,9 +540,9 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
         }}
       >
         {(item) => (
-          <SelectItem key={item.iconid} value={item.iconid} textValue={item.name}>
-            <div className="flex gap-2 items-center">
-              {item.avatar}
+          <SelectItem key={item.iconid} value={item.iconid} textValue={item.name} >
+            <div className="flex gap-2 items-center bwIcon">
+              <Icon id={item.iconid} />
 
               <div className="flex flex-col">
                 <span className="text-small">{item.name}</span>
@@ -580,7 +615,7 @@ const EducationInput = ({ handleAdd, setValue, data, initialValue }) => {
       />
       <Textarea
         type="text"
-        maxLength={100}
+        maxLength={180}
         className={styles.fullField}
         label="Short description"
         value={data.shortDescription}
@@ -716,7 +751,7 @@ const WorkExperienceInput = ({ handleAdd, setValue, data, initialValue }) => {
         label="Description"
         className={styles.fullField}
         value={data.shortDescription}
-        maxLength={200}
+        maxLength={240}
         onChange={(e) => setValue((state) => ({
           ...state,
           shortDescription: e.target.value
@@ -760,7 +795,7 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertif
           label="Certificate title"
           className={`${showCertificates ? "opacity-100" : "opacity-50"}`}
           value={data.title}
-          maxLength={60}
+          maxLength={80}
           onChange={(e) => setValue((state) => ({
             ...state,
             title: e.target.value
@@ -783,7 +818,7 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertif
         label="Description"
         className={`${styles.fullField} ${showCertificates ? "opacity-100" : "opacity-50"}`}
         value={data.description}
-        maxLength={120}
+        maxLength={150}
         onChange={(e) => setValue((state) => ({
           ...state,
           description: e.target.value
@@ -852,7 +887,7 @@ const ProjectsInput = ({ handleAdd, data, setValue, initialValue, showProjects }
         label="Title"
         className={`${showProjects ? "opacity-100" : "opacity-50"}`}
         value={data.title}
-        maxLength={60}
+        maxLength={120}
         onChange={(e) => setValue((state) => ({
           ...state,
           title: e.target.value
@@ -863,7 +898,7 @@ const ProjectsInput = ({ handleAdd, data, setValue, initialValue, showProjects }
         label="Short description"
         className={`${showProjects ? "opacity-100" : "opacity-50"} ${styles.fullField}`}
         value={data.shortDescription}
-        maxLength={120}
+        maxLength={150}
         onChange={(e) => setValue((state) => ({
           ...state,
           shortDescription: e.target.value
