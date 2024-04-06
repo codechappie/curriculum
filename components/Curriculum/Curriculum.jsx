@@ -85,7 +85,7 @@ const Curriculum = ({
                     </div>)}
                     <div className={style.profile}>
                         <h2 className={style.subTitle}>Professional Summary</h2>
-                        {profileDescription ? <p>profileDescription </p> : (<div>
+                        {profileDescription ? <p>{profileDescription}</p> : (<div>
                             <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
                             <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
                             <Skeleton className="rounded-lg w-48 h-6 mt-1"></Skeleton>
