@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from './dashboard.module.scss';
-// import JSConfetti from 'js-confetti'
+import JSConfetti from 'js-confetti';
 
 const SNSInitialValue = {
   iconid: "",
@@ -63,8 +63,9 @@ const Dashboard = () => {
   const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
   const [currentProjects, setCurrentProjects] = useState(ProjectsInitialValue);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [confetti, setConfetti] = useState();
   // const jsConfetti = new JSConfetti();
+
 
   const [globalState, setGlobalState] = useState({
     profileImage: "",
@@ -97,14 +98,20 @@ const Dashboard = () => {
 
 
   useEffect(() => {
+
     if (user._id) {
-      console.log("USER", user)
       setGlobalState(user);
     }
   }, [user]);
 
+  useEffect(() => {
+    const jsConfetti = new JSConfetti();
+    setConfetti(jsConfetti)
+    // jsConfetti.addConfetti();
+  }, []);
 
   const getUserData = (id) => {
+
     setIsLoading(true);
     axios.get(`/api/user/${id}`).then(({ data }) => {
       data.success && setUser(data.user)
@@ -150,15 +157,14 @@ const Dashboard = () => {
   }
 
   const saveGlobalChanges = () => {
-    console.log("GLOBALSTATE", globalState);
 
     axios.put(`/api/user/${user.id}`, globalState)
       .catch((error) => console.log(error));
 
-    // jsConfetti.addConfetti({
-    //   emojis: ['🥳', '🎉', '🎊', '💥', '✨'],
-    //   confettiNumber: 30,
-    // })
+    confetti.addConfetti({
+      emojis: ['🥳', '🎉', '🎊', '💥', '✨'],
+      confettiNumber: 40,
+    });
   }
 
   return (
@@ -286,26 +292,12 @@ const Dashboard = () => {
                   aria-label="Skills"
                   title="Skills">
                   <div className={styles.skillsContainer}>
-                    <div className={styles.skillInput}>
-                      <Input
-                        type="text"
-                        label="Skill"
-                        value={currentSkill.name}
-                        onChange={(e) => setCurrentSkill((state) => ({
-                          ...state,
-                          name: e.target.value
-                        }))}
-                      />
-                      <Button
-                        color='secondary'
-                        className="h-unit-14"
-                        onClick={() => handleAddObject(
-                          "skills",
-                          currentSkill,
-                          setCurrentSkill,
-                          SkillInitialValue
-                        )}>Add</Button>
-                    </div>
+                    <SkillInput
+                      handleAdd={handleAddObject}
+                      setValue={setCurrentSkill}
+                      data={currentSkill}
+                      initialValue={SkillInitialValue}
+                    />
                     <div className={styles.skills}>
                       {globalState.skills.map((skill, index) => (
                         <Chip key={index}
@@ -559,6 +551,21 @@ const SnsSelectInput = ({ handleAdd, setValue, data, initialValue }) => {
 
 
 const EducationInput = ({ handleAdd, setValue, data, initialValue }) => {
+  const [buttonIsAvailable, setButtonAvailable] = useState(false);
+
+  useEffect(() => {
+    const { title, shortDescription, startDate, endDate } = data;
+    if (title.trim() !== "" &&
+      shortDescription.trim() !== ""
+      && startDate.trim() !== ""
+      && endDate.trim() !== "") {
+      setButtonAvailable(true)
+    } else {
+      setButtonAvailable(false)
+    }
+
+  }, [data]);
+
   return (
     <div className={styles.educationInput}>
       <Input
@@ -601,17 +608,70 @@ const EducationInput = ({ handleAdd, setValue, data, initialValue }) => {
         }))}
       />
       <Button
-        className={`w-full ${styles.fullField}`}
+        className={`${styles.fullField} w-full ${buttonIsAvailable ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         color='secondary'
         onClick={() => handleAdd("academicEducation", data, setValue, initialValue)}
+        disabled={!buttonIsAvailable}
       >
         Save
       </Button>
     </div>)
 }
 
+const SkillInput = ({ handleAdd, setValue, data, initialValue }) => {
+  const [buttonIsAvailable, setButtonAvailable] = useState(false);
+
+  useEffect(() => {
+    const { name } = data;
+    if (name.trim() !== "") {
+      setButtonAvailable(true)
+    } else {
+      setButtonAvailable(false)
+    }
+
+  }, [data]);
+
+  return (<div className={styles.skillInput}>
+    <Input
+      type="text"
+      label="Skill"
+      value={data.name}
+      onChange={(e) => setValue((state) => ({
+        ...state,
+        name: e.target.value
+      }))}
+    />
+    <Button
+      color='secondary'
+      className={`h-unit-14 ${buttonIsAvailable ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
+      onClick={() => handleAdd(
+        "skills",
+        data,
+        setValue,
+        initialValue
+      )}
+      disabled={!buttonIsAvailable}
+    >Add</Button>
+  </div>)
+}
 
 const WorkExperienceInput = ({ handleAdd, setValue, data, initialValue }) => {
+  const [buttonIsAvailable, setButtonAvailable] = useState(false);
+
+  useEffect(() => {
+    const { title, company, startDate, endDate, shortDescription } = data;
+    if (title.trim() !== "" &&
+      company.trim() !== ""
+      && startDate.trim() !== ""
+      && endDate.trim() !== ""
+      && shortDescription.trim() !== "") {
+      setButtonAvailable(true)
+    } else {
+      setButtonAvailable(false)
+    }
+
+  }, [data]);
+
   return (
     <div className={styles.workExperienceInput}>
       <Input
@@ -665,18 +725,33 @@ const WorkExperienceInput = ({ handleAdd, setValue, data, initialValue }) => {
 
       <Button
         color='secondary'
-        className={styles.fullField}
+        className={`${styles.fullField} w-full ${buttonIsAvailable ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         onClick={() => handleAdd(
           "workExperiences",
           data,
           setValue,
           initialValue
         )}
+        disabled={!buttonIsAvailable}
       >Add work experience</Button>
     </div>)
 }
 
 const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertificates }) => {
+  const [buttonIsAvailable, setButtonAvailable] = useState(false);
+
+  useEffect(() => {
+    const { title, date, description } = data;
+    if (title.trim() !== "" &&
+      date.trim() !== ""
+      && description.trim() !== "") {
+      setButtonAvailable(true)
+    } else {
+      setButtonAvailable(false)
+    }
+
+  }, [data]);
+
   return (
     <div className={styles.certificatesInput}>
       <div className={styles.titleAndDate}>
@@ -718,7 +793,7 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertif
 
       <Button
         color='secondary'
-        className={`${styles.fullField} ${showCertificates ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
+        className={`${styles.fullField} ${(buttonIsAvailable && showCertificates) ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         onClick={() => {
           handleAdd(
             "certificates",
@@ -727,12 +802,27 @@ const CertificatesInput = ({ handleAdd, data, setValue, initialValue, showCertif
             initialValue
           )
         }}
-        disabled={!showCertificates}
-      >Add work experience</Button>
-    </div>)
+        disabled={(!buttonIsAvailable || !showCertificates)}
+      >Add certificates</Button>
+    </div >)
 }
 
 const ProjectsInput = ({ handleAdd, data, setValue, initialValue, showProjects }) => {
+  const [buttonIsAvailable, setButtonAvailable] = useState(false);
+
+  useEffect(() => {
+    const { externalUrl, imageUrl, title, shortDescription } = data;
+    if (externalUrl.trim() !== "" &&
+      imageUrl.trim() !== ""
+      && title.trim() !== ""
+      && shortDescription.trim() !== "") {
+      setButtonAvailable(true)
+    } else {
+      setButtonAvailable(false)
+    }
+
+  }, [data]);
+
   return (
     <div className={styles.projectsInput}>
       <Input
@@ -783,15 +873,15 @@ const ProjectsInput = ({ handleAdd, data, setValue, initialValue, showProjects }
 
       <Button
         color='secondary'
-        className={`${styles.fullField} ${showProjects ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
+        className={`${styles.fullField} ${(buttonIsAvailable && showProjects) ? "opacity-100" : "opacity-50 data-[pressed=true]:scale-[1] data-[hover=true]:opacity-50"}`}
         onClick={() => handleAdd(
           "projects",
           data,
           setValue,
           initialValue
         )}
-        disabled={!showProjects}
-      >Add work experience</Button>
+        disabled={(!buttonIsAvailable || !showProjects)}
+      >Add projects</Button>
     </div>)
 }
 

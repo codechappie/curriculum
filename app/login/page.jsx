@@ -8,8 +8,6 @@ import AppContainer from "@/components/AppContainer";
 const Login = () => {
   const { data: session, status } = useSession();
 
-  console.log("SESSION", session)
-
   if (status === "loading") return <Spinner size="lg" />
 
   if (status === "authenticated") return redirect("/dashboard")

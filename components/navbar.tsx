@@ -41,7 +41,7 @@ export const Navbar = () => {
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
 					<NextLink className="flex justify-start items-center gap-1" href="/">
 						<Logo />
-						<p className="font-bold text-inherit">Resumma</p>
+						<p className="font-bold text-inherit">Curriculum</p>
 					</NextLink>
 				</NavbarBrand>
 				<ul className="hidden md:flex gap-4 justify-start ml-2">
@@ -107,6 +107,19 @@ export const Navbar = () => {
 					>
 						Sponsor
 					</Button>
+				</NavbarItem>
+				<NavbarItem className="hidden md:flex">
+					{(status === "authenticated") && (
+						<Button
+							startContent={<SignOutIcon fill="white" />}
+							color="danger"
+							onClick={() => {
+								setmenuIsOpen(false);
+								signOut();
+							}}>
+							Sign Out
+						</Button>
+					)}
 				</NavbarItem>
 			</NavbarContent>
 

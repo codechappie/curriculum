@@ -26,7 +26,6 @@ const Page = () => {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        console.log(params.username)
         getUserData(params.username);
     }, []);
 

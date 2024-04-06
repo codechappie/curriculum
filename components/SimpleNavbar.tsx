@@ -41,7 +41,7 @@ export const SimpleNavbar = () => {
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
 					<NextLink className="flex justify-start items-center gap-1" href="/">
 						<Logo />
-						<p className="font-bold text-inherit">Resumma</p>
+						<p className="font-bold text-inherit">Curriculum</p>
 					</NextLink>
 				</NavbarBrand>
 				<ul className="hidden md:flex gap-4 justify-start ml-2">
@@ -111,7 +111,7 @@ export const SimpleNavbar = () => {
 					<GithubIcon size={25} className="text-default-500" />
 				</Link>
 				<ThemeSwitch />
-				
+
 				<NavbarMenuToggle onClick={() => setmenuIsOpen(!menuIsOpen)} />
 			</NavbarContent>
 
