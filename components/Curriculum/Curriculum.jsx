@@ -17,11 +17,12 @@ const Curriculum = (state) => {
         case "sunny":
             return <CurriculumSunnyTheme {...state} />
         default:
-            break;
+            return <CurriculumBasicTheme {...state} />
     }
 
 }
 
+export default Curriculum;
 
 const CurriculumSunnyTheme = ({
     isLoading = false,
@@ -40,7 +41,7 @@ const CurriculumSunnyTheme = ({
     certificates,
     projects,
     displaySections }) => {
-        console.log("OCUP: ", occupation)
+    console.log("OCUP: ", occupation)
     return (
         <div className={`${sunnyTheme.curriculumPage} ${isMobile && sunnyTheme.isMobile}`}>
             <div className={sunnyTheme.curriculumPageContainer}>
@@ -138,7 +139,6 @@ const CurriculumSunnyTheme = ({
         </div >
     )
 }
-
 
 
 const CurriculumBasicTheme = ({
@@ -397,6 +397,3 @@ const ProjectSkeleton = ({ type = "simple" }) => {
         </div>
     </div>
 }
-
-
-export default Curriculum
