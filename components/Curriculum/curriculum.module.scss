@@ -1,4 +1,4 @@
-.curriculumPage {
+.curriculumPage.basic {
   width: 100%;
   color: var(--text-color);
   padding: 4rem 0 2rem 0;
@@ -50,9 +50,15 @@
       }
     }
   }
+
+  .subTitle {
+    width: 100%;
+    padding: 5px 30px;
+    background: var(--page-dark-light);
+  }
 }
 
-.curriculumPageContainer {
+.basic .curriculumPageContainer {
   max-width: 1200px;
   height: 100%;
   width: 96%;
@@ -65,11 +71,7 @@
   overflow: hidden;
 }
 
-.subTitle {
-  width: 100%;
-  padding: 5px 30px;
-  background: var(--page-dark-light);
-}
+
 .personalInformation {
   display: flex;
   flex-direction: column;
@@ -493,13 +495,13 @@
 }
 
 @media screen and (max-width: 960px) {
-  .curriculumPage,
-  .curriculumPageContainer {
+  .curriculumPage.basic,
+  .basic .curriculumPageContainer {
     padding: 0;
     margin: 0;
     width: 100%;
   }
-  .curriculumPageContainer {
+  .basic .curriculumPageContainer {
     grid-template-columns: 1fr;
   }
   .personalInformation {

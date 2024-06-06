@@ -40,24 +40,51 @@ const CurriculumSunnyTheme = ({
     workExperiences,
     certificates,
     projects,
-    displaySections }) => {
-    console.log("OCUP: ", occupation)
+    displaySections, theme }) => {
+    console.log("OCUP: ", theme)
     return (
-        <div className={`${sunnyTheme.curriculumPage} ${isMobile && sunnyTheme.isMobile}`}>
+        <div className={`${sunnyTheme.curriculumPage} ${sunnyTheme[theme]} ${isMobile && sunnyTheme.isMobile}`}>
             <div className={sunnyTheme.curriculumPageContainer}>
-                <div className={sunnyTheme.presentation}>
-                    <div className={sunnyTheme.mainPhoto}>
-                        <span>Creative</span>
-                        <span>Fun</span>
-                        <span>Adaptive</span>
-                        <img src={profileImage} alt="" />
+                <div className={sunnyTheme.mainPhoto}>
+                    <span>Creative</span>
+                    <span>Fun</span>
+                    <span>Adaptive</span>
+                    <img src={profileImage} alt="" />
+                </div>
+
+                <div className={sunnyTheme.simpleDetails}>
+                    <div className={sunnyTheme.circles}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div className={sunnyTheme.details}>
+                        <span className={sunnyTheme.hand}>👋</span>
+                        {occupation ? <h3>{occupation}</h3> : <Skeleton className="rounded-lg w-56 h-6 mt-1"></Skeleton>}
+                        <div className={sunnyTheme.name}>{
+                            fullName ? fullName : <Skeleton className="rounded-lg w-48 h-6">
+                            </Skeleton>
+                        }</div>
                     </div>
                 </div>
 
+
                 <div className={sunnyTheme.moreDetails}>
-                    <div className={sunnyTheme.details}>
-                        👋🏽
-                        {occupation ? <h3>{occupation}</h3> : <Skeleton className="rounded-lg w-56 h-6 mt-1"></Skeleton>}
+                    <div className={sunnyTheme.skills}>
+                        <h2 className={sunnyTheme.subTitle}>Skills</h2>
+                        <ul className={sunnyTheme.items}>
+                            {(skills && skills.length > 0 ? skills.map((skill) => (
+                                <li className={sunnyTheme.item} key={skill.id}>
+                                    <div className={sunnyTheme.dot}></div>
+                                    <small>{skill.name}</small>
+                                </li>
+                            )) : [1, 2, 3, 4, 5, 6].map((index) => (
+                                <li className={sunnyTheme.item} key={index}>
+                                    <div className={sunnyTheme.dot}></div>
+                                    <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+                                </li>
+                            )))}
+                        </ul>
                     </div>
                 </div>
                 {/* 
