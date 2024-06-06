@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema(
     id: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
+    displaySections: { type: Object, required: true },
     profileImage: { type: String },
     occupation: { type: String, },
     address: { type: String, },
@@ -17,7 +18,7 @@ const UserSchema = new mongoose.Schema(
     workExperiences: { type: Array, },
     certificates: { type: Array, },
     projects: { type: Array, },
-    displaySections: { type: Object, },
+    theme: { type: String }
   },
   { collection: "user" }
 );

@@ -3,7 +3,11 @@ import AppContainer from '@/components/AppContainer';
 import Curriculum from '@/components/Curriculum/Curriculum';
 import Icon from '@/components/Icon';
 import { DiscordIcon, GithubIcon, TwitterIcon } from '@/components/icons';
-import { Accordion, AccordionItem, Button, Chip, Divider, Input, Select, SelectItem, Switch, Textarea } from '@nextui-org/react';
+import {
+  Accordion, AccordionItem, Button, Chip,
+  Divider, Input, Select, SelectItem, Switch, Textarea, Tabs, Tab, Card, CardBody
+} from '@nextui-org/react';
+import ThemesBox from '@/components/ThemeBox/ThemesBox'
 import axios from 'axios';
 import { useSession } from "next-auth/react";
 import Link from 'next/link';
@@ -52,6 +56,8 @@ const ProjectsInitialValue = {
   shortDescription: "",
 }
 
+const ThemeInitialValue = "";
+
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
@@ -62,9 +68,9 @@ const Dashboard = () => {
   const [currentWorkExperiences, setCurrentWorkExperiences] = useState(WorkExperiencesInitialValue);
   const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
   const [currentProjects, setCurrentProjects] = useState(ProjectsInitialValue);
+  // const [currentTheme, setCurrentTheme] = useState(ThemeInitialValue);
   const [isLoading, setIsLoading] = useState(true);
   const [confetti, setConfetti] = useState();
-  // const jsConfetti = new JSConfetti();
 
 
   const [globalState, setGlobalState] = useState({
@@ -81,7 +87,8 @@ const Dashboard = () => {
     workExperiences: [],
     certificates: [],
     projects: [],
-    displaySections: {}
+    displaySections: {},
+    theme: "",
   });
 
 
@@ -101,6 +108,7 @@ const Dashboard = () => {
 
     if (user._id) {
       setGlobalState(user);
+      console.log("USER: ", user)
     }
   }, [user]);
 
@@ -155,6 +163,7 @@ const Dashboard = () => {
 
   const saveGlobalChanges = () => {
 
+    console.log("GLB", globalState)
     axios.put(`/api/user/${user.id}`, globalState)
       .catch((error) => console.log(error));
 
@@ -169,248 +178,261 @@ const Dashboard = () => {
       <div className={styles.dashboardPage}>
         <div className={styles.container}>
           <div className={styles.formContainer}>
-            <section className={styles.form}>
-              <Accordion
-                selectedKeys={selectedKeys}
-                onSelectionChange={setSelectedKeys}
-                variant="light">
-                <AccordionItem key="1" aria-label="Basic Information" title="Basic Information">
-                  <div className={styles.basicInformation}>
-                    <div className={styles.userProfile}>
-                      {/* TODO: ADD IMAGE PUBLIC */}
-                      <img src={globalState.profileImage || "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"} alt="" />
-                      <Input
-                        type="text"
-                        label="URL image"
-                        value={globalState.profileImage}
-                        onChange={(e) => { handleChange(e.target.value, "profileImage") }}
-                      />
-                    </div>
-                    <Input
-                      type="text"
-                      label="Full name"
-                      value={globalState.fullName}
-                      onChange={(e) => handleChange(e.target.value, "fullName")}
-                    />
-                    <Input
-                      type="text"
-                      label="Occupation"
-                      value={globalState.occupation}
-                      onChange={(e) => handleChange(e.target.value, "occupation")}
-                    />
+            <Tabs key="bordered" variant="bordered" aria-label="Tabs variants">
+              <Tab key="information" title="Information">
+                <section className={styles.form}>
+                  <Accordion
+                    selectedKeys={selectedKeys}
+                    onSelectionChange={setSelectedKeys}
+                    variant="light">
+                    <AccordionItem key="1" aria-label="Basic Information" title="Basic Information">
+                      <div className={styles.basicInformation}>
+                        <div className={styles.userProfile}>
+                          {/* TODO: ADD IMAGE PUBLIC */}
+                          <img src={globalState.profileImage || "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"} alt="" />
+                          <Input
+                            type="text"
+                            label="URL image"
+                            value={globalState.profileImage}
+                            onChange={(e) => { handleChange(e.target.value, "profileImage") }}
+                          />
+                        </div>
+                        <Input
+                          type="text"
+                          label="Full name"
+                          value={globalState.fullName}
+                          onChange={(e) => handleChange(e.target.value, "fullName")}
+                        />
+                        <Input
+                          type="text"
+                          label="Occupation"
+                          value={globalState.occupation}
+                          onChange={(e) => handleChange(e.target.value, "occupation")}
+                        />
 
-                    <Divider className={styles.fullField} />
-                    <Input
-                      type="text"
-                      label="Full address"
-                      className={styles.fullField}
-                      maxLength={50}
-                      value={globalState.address}
-                      onChange={(e) => handleChange(e.target.value, "address")}
-                    />
-                    <Input
-                      type="email"
-                      label="Email"
-                      value={globalState.email}
-                      onChange={(e) => handleChange(e.target.value, "email")}
-                    />
-                    <Input
-                      type="text"
-                      label="Phone number"
-                      value={globalState.phoneNumber}
-                      placeholder='+5198567765'
-                      onChange={(e) => handleChange(e.target.value, "phoneNumber")}
-                    />
-                    <Textarea
-                      key="flat"
-                      variant="flat"
-                      label="Profile description"
-                      labelPlacement="inside"
-                      placeholder="Enter your description"
-                      className={`${styles.fullField} col-span-12 md:col-span-6 mb-6 md:mb-0`}
-                      value={globalState.profileDescription}
-                      onChange={(e) => handleChange(e.target.value, "profileDescription")}
-                    />
-                  </div>
-                </AccordionItem>
-                <AccordionItem key="2" aria-label="Social networks" title="Social networks">
-                  <div className={styles.socialNetworks}>
-                    <SnsSelectInput
-                      handleAdd={handleAddObject}
-                      setValue={setCurrentSocialNetwork}
-                      data={currentSocialNetwork}
-                      initialValue={SNSInitialValue}
-                    />
-                    <div className={styles.chips}>
-                      {globalState.socialNetworks.map((snsItem, index) => (
-                        <Chip
-                          key={index}
-                          startContent={<Icon className={styles.chipImg} id={snsItem.iconid} size={22} />}
-                          onDoubleClick={() => handleEditObject("socialNetworks", setCurrentSocialNetwork, snsItem.id)}
-                          onClose={() => handleCloseObject("socialNetworks", snsItem.id)}
-                          size='lg'
-                          variant="flat">
-                          {snsItem.name}
-                        </Chip>
-                      ))}
-                    </div>
-                  </div>
-                </AccordionItem>
-                <AccordionItem key="3"
-                  aria-label="Education"
-                  title="Education">
-                  <div className={styles.educationContainer}>
-                    <EducationInput
-                      handleAdd={handleAddObject}
-                      setValue={setCurrentAcademicEducation}
-                      data={currentAcademicEducation}
-                      initialValue={AcademicEducationInitialValue}
-                    />
-
-                    {(globalState.academicEducation && globalState.academicEducation.length > 0) && <Divider />}
-                    <div className={styles.items}>
-                      {globalState.academicEducation.map((educationItem, index) => {
-                        return (
-
-                          <Chip
-                            key={index}
-                            onDoubleClick={() => handleEditObject("academicEducation", setCurrentAcademicEducation, educationItem.id)}
-                            onClose={() => handleCloseObject("academicEducation", educationItem.id)}
-                            size='lg'
-                            variant="flat">
-                            {educationItem.title}
-                          </Chip>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </AccordionItem>
-                <AccordionItem key="4"
-                  aria-label="Skills"
-                  title="Skills">
-                  <div className={styles.skillsContainer}>
-                    <SkillInput
-                      handleAdd={handleAddObject}
-                      setValue={setCurrentSkill}
-                      data={currentSkill}
-                      initialValue={SkillInitialValue}
-                    />
-                    <div className={styles.skills}>
-                      {globalState.skills.map((skill, index) => (
-                        <Chip key={index}
-                          onClose={() => handleCloseObject("skills", skill.id)}
-                          onDoubleClick={() => handleEditObject("skills", setCurrentSkill, skill.id)}
-                          variant="flat">
-                          {skill.name}
-                        </Chip>
-                      ))}
-                    </div>
-                  </div>
-                </AccordionItem>
-                <AccordionItem key="5"
-                  aria-label="Work experience"
-                  title="Work experience">
-                  <div className={styles.workExperience}>
-                    <WorkExperienceInput
-                      handleAdd={handleAddObject}
-                      setValue={setCurrentWorkExperiences}
-                      data={currentWorkExperiences}
-                      initialValue={WorkExperiencesInitialValue}
-                    />
-                    <div className={styles.skills}>
-                      {globalState.workExperiences.map((item, index) => (
-                        <Chip key={index}
-                          onClose={() => handleCloseObject("workExperiences", item.id)}
-                          onDoubleClick={() => handleEditObject("workExperiences", setCurrentWorkExperiences, item.id)}
-                          variant="flat">
-                          {item.title}
-                        </Chip>
-                      ))}
-                    </div>
-                  </div>
-                </AccordionItem>
-                <AccordionItem key="6"
-                  aria-label="Certificates"
-                  title="Certificates">
-                  <div className={styles.certificatesContainer}>
-                    <div className="w-fit mb-4">
-
-                      <Switch
-                        isSelected={globalState.displaySections.certificates}
-                        onChange={(e) => {
-                          handleChange({
-                            ...globalState.displaySections,
-                            certificates: e.target.checked
-                          }, "displaySections");
-                        }}
-                      >
-                        {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
-                      </Switch>
-                    </div>
-
-                    <CertificatesInput
-                      handleAdd={handleAddObject}
-                      setValue={setCurrentCertificates}
-                      data={currentCertificates}
-                      initialValue={CertificatesInitialValue}
-                      showCertificates={globalState.displaySections.certificates}
-                    />
-                    <div className={styles.certificates}>
-                      {globalState.certificates.map((item, index) => (
-                        <Chip key={index}
-                          className={`${globalState.displaySections.certificates ? "opacity-100" : "opacity-50"}`}
-                          onClose={() => globalState.displaySections.certificates && handleCloseObject("certificates", item.id)}
-                          onDoubleClick={() => globalState.displaySections.certificates && handleEditObject("certificates", setCurrentCertificates, item.id)}
+                        <Divider className={styles.fullField} />
+                        <Input
+                          type="text"
+                          label="Full address"
+                          className={styles.fullField}
+                          maxLength={50}
+                          value={globalState.address}
+                          onChange={(e) => handleChange(e.target.value, "address")}
+                        />
+                        <Input
+                          type="email"
+                          label="Email"
+                          value={globalState.email}
+                          onChange={(e) => handleChange(e.target.value, "email")}
+                        />
+                        <Input
+                          type="text"
+                          label="Phone number"
+                          value={globalState.phoneNumber}
+                          placeholder='+5198567765'
+                          onChange={(e) => handleChange(e.target.value, "phoneNumber")}
+                        />
+                        <Textarea
+                          key="flat"
                           variant="flat"
-                        >
-                          {item.title}
-                        </Chip>
-                      ))}
-                    </div>
-                  </div>
-                </AccordionItem>
+                          label="Profile description"
+                          labelPlacement="inside"
+                          placeholder="Enter your description"
+                          className={`${styles.fullField} col-span-12 md:col-span-6 mb-6 md:mb-0`}
+                          value={globalState.profileDescription}
+                          onChange={(e) => handleChange(e.target.value, "profileDescription")}
+                        />
+                      </div>
+                    </AccordionItem>
+                    <AccordionItem key="2" aria-label="Social networks" title="Social networks">
+                      <div className={styles.socialNetworks}>
+                        <SnsSelectInput
+                          handleAdd={handleAddObject}
+                          setValue={setCurrentSocialNetwork}
+                          data={currentSocialNetwork}
+                          initialValue={SNSInitialValue}
+                        />
+                        <div className={styles.chips}>
+                          {globalState.socialNetworks.map((snsItem, index) => (
+                            <Chip
+                              key={index}
+                              startContent={<Icon className={styles.chipImg} id={snsItem.iconid} size={22} />}
+                              onDoubleClick={() => handleEditObject("socialNetworks", setCurrentSocialNetwork, snsItem.id)}
+                              onClose={() => handleCloseObject("socialNetworks", snsItem.id)}
+                              size='lg'
+                              variant="flat">
+                              {snsItem.name}
+                            </Chip>
+                          ))}
+                        </div>
+                      </div>
+                    </AccordionItem>
+                    <AccordionItem key="3"
+                      aria-label="Education"
+                      title="Education">
+                      <div className={styles.educationContainer}>
+                        <EducationInput
+                          handleAdd={handleAddObject}
+                          setValue={setCurrentAcademicEducation}
+                          data={currentAcademicEducation}
+                          initialValue={AcademicEducationInitialValue}
+                        />
+
+                        {(globalState.academicEducation && globalState.academicEducation.length > 0) && <Divider />}
+                        <div className={styles.items}>
+                          {globalState.academicEducation.map((educationItem, index) => {
+                            return (
+
+                              <Chip
+                                key={index}
+                                onDoubleClick={() => handleEditObject("academicEducation", setCurrentAcademicEducation, educationItem.id)}
+                                onClose={() => handleCloseObject("academicEducation", educationItem.id)}
+                                size='lg'
+                                variant="flat">
+                                {educationItem.title}
+                              </Chip>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </AccordionItem>
+                    <AccordionItem key="4"
+                      aria-label="Skills"
+                      title="Skills">
+                      <div className={styles.skillsContainer}>
+                        <SkillInput
+                          handleAdd={handleAddObject}
+                          setValue={setCurrentSkill}
+                          data={currentSkill}
+                          initialValue={SkillInitialValue}
+                        />
+                        <div className={styles.skills}>
+                          {globalState.skills.map((skill, index) => (
+                            <Chip key={index}
+                              onClose={() => handleCloseObject("skills", skill.id)}
+                              onDoubleClick={() => handleEditObject("skills", setCurrentSkill, skill.id)}
+                              variant="flat">
+                              {skill.name}
+                            </Chip>
+                          ))}
+                        </div>
+                      </div>
+                    </AccordionItem>
+                    <AccordionItem key="5"
+                      aria-label="Work experience"
+                      title="Work experience">
+                      <div className={styles.workExperience}>
+                        <WorkExperienceInput
+                          handleAdd={handleAddObject}
+                          setValue={setCurrentWorkExperiences}
+                          data={currentWorkExperiences}
+                          initialValue={WorkExperiencesInitialValue}
+                        />
+                        <div className={styles.skills}>
+                          {globalState.workExperiences.map((item, index) => (
+                            <Chip key={index}
+                              onClose={() => handleCloseObject("workExperiences", item.id)}
+                              onDoubleClick={() => handleEditObject("workExperiences", setCurrentWorkExperiences, item.id)}
+                              variant="flat">
+                              {item.title}
+                            </Chip>
+                          ))}
+                        </div>
+                      </div>
+                    </AccordionItem>
+                    <AccordionItem key="6"
+                      aria-label="Certificates"
+                      title="Certificates">
+                      <div className={styles.certificatesContainer}>
+                        <div className="w-fit mb-4">
+
+                          <Switch
+                            isSelected={globalState.displaySections.certificates}
+                            onChange={(e) => {
+                              handleChange({
+                                ...globalState.displaySections,
+                                certificates: e.target.checked
+                              }, "displaySections");
+                            }}
+                          >
+                            {globalState.displaySections.certificates ? "Show" : "Hide"} certificates
+                          </Switch>
+                        </div>
+
+                        <CertificatesInput
+                          handleAdd={handleAddObject}
+                          setValue={setCurrentCertificates}
+                          data={currentCertificates}
+                          initialValue={CertificatesInitialValue}
+                          showCertificates={globalState.displaySections.certificates}
+                        />
+                        <div className={styles.certificates}>
+                          {globalState.certificates.map((item, index) => (
+                            <Chip key={index}
+                              className={`${globalState.displaySections.certificates ? "opacity-100" : "opacity-50"}`}
+                              onClose={() => globalState.displaySections.certificates && handleCloseObject("certificates", item.id)}
+                              onDoubleClick={() => globalState.displaySections.certificates && handleEditObject("certificates", setCurrentCertificates, item.id)}
+                              variant="flat"
+                            >
+                              {item.title}
+                            </Chip>
+                          ))}
+                        </div>
+                      </div>
+                    </AccordionItem>
 
 
-                <AccordionItem key="7"
-                  aria-label="Projects"
-                  title="Projects">
-                  <div className={styles.projectsContainer}>
-                    <div className="w-fit mb-4">
+                    <AccordionItem key="7"
+                      aria-label="Projects"
+                      title="Projects">
+                      <div className={styles.projectsContainer}>
+                        <div className="w-fit mb-4">
 
-                      <Switch
-                        isSelected={globalState.displaySections.projects}
-                        onChange={(e) => {
-                          handleChange({
-                            ...globalState.displaySections,
-                            projects: e.target.checked
-                          }, "displaySections");
-                        }}
-                      >
-                        {globalState.displaySections.projects ? "Show" : "Hide"} projects
-                      </Switch>
-                    </div>
-                    <ProjectsInput
-                      handleAdd={handleAddObject}
-                      setValue={setCurrentProjects}
-                      data={currentProjects}
-                      initialValue={ProjectsInitialValue}
-                      showProjects={globalState.displaySections.projects}
-                    />
-                    <div className={styles.items}>
-                      {globalState.projects.map((project, index) => (
-                        <Chip
-                          variant="faded"
-                          key={index}
-                          onClose={() => handleCloseObject("projects", project.id)}
-                          onDoubleClick={() => handleEditObject("projects", setCurrentProjects, project.id)}
-                        >  {project.title}
-                        </Chip>
-                      ))}
-                    </div>
-                  </div>
-                </AccordionItem>
-              </Accordion>
-            </section>
+                          <Switch
+                            isSelected={globalState.displaySections.projects}
+                            onChange={(e) => {
+                              handleChange({
+                                ...globalState.displaySections,
+                                projects: e.target.checked
+                              }, "displaySections");
+                            }}
+                          >
+                            {globalState.displaySections.projects ? "Show" : "Hide"} projects
+                          </Switch>
+                        </div>
+                        <ProjectsInput
+                          handleAdd={handleAddObject}
+                          setValue={setCurrentProjects}
+                          data={currentProjects}
+                          initialValue={ProjectsInitialValue}
+                          showProjects={globalState.displaySections.projects}
+                        />
+                        <div className={styles.items}>
+                          {globalState.projects.map((project, index) => (
+                            <Chip
+                              variant="faded"
+                              key={index}
+                              onClose={() => handleCloseObject("projects", project.id)}
+                              onDoubleClick={() => handleEditObject("projects", setCurrentProjects, project.id)}
+                            >  {project.title}
+                            </Chip>
+                          ))}
+                        </div>
+                      </div>
+                    </AccordionItem>
+                  </Accordion>
+                </section>
+              </Tab>
+              <Tab key="themes" title="Themes">
+                <section className={styles.form}>
+                  <ThemesBox
+                    theme={globalState.theme}
+                    handleChange={handleChange}
+                  />
+                </section>
+              </Tab>
+            </Tabs>
+
             <div className={styles.buttons}>
               <Link
                 className='w-full button'

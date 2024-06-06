@@ -1,0 +1,47 @@
+.slider {
+    margin: 0 auto;
+    position: relative;
+    width: 100vw;
+    height: 700px;
+    display: grid;
+    place-items: center;
+    overflow:hidden;
+  }
+  
+  /* REMEBER: 350px is the width of slide if you change this, do it everywhere this size it's similar.
+  * 16 is the number of items
+  */
+  .sliderItems {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    width: calc(350px * 8);
+    height: 100%;
+    animation: scrolling 20s linear infinite;
+  }
+  
+  .slide {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .slide img {
+    width: 90%;
+    height: auto;
+  }
+  
+  /**
+  * 350px is thw width of slide and 8 is the half of items and it's negative 
+  * for left to right animation
+  */
+  @keyframes scrolling {
+    0% {
+      transform: translateX(0);
+    }
+  
+    100% {
+      transform: translateX(calc(350px * -4));
+    }
+  }

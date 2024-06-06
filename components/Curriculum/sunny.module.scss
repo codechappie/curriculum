@@ -1,0 +1,88 @@
+.curriculumPage {
+    width: 100%;
+    color: var(--text-color);
+    padding: 4rem 0 2rem 0;
+    transition: background 0.2s ease-in-out;
+    background-color: var(--body-color);
+    transition: all 0.2s ease-in-out;
+
+    &.false {
+        display: none;
+    }
+
+    &.isMobile {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        padding: 0;
+        padding-top: 10px;
+
+        @media screen and (max-width: 1080px) {
+            padding-top: 0;
+        }
+
+        .curriculumPageContainer {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.curriculumPageContainer {
+    max-width: 1200px;
+    height: 100%;
+    width: 96%;
+    margin: 0 auto;
+    background: var(--page-color);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 3fr 5fr;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.205);
+    overflow: hidden;
+
+
+    .mainPhoto {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        aspect-ratio: 1/1;
+
+        span {
+            background: #ffffffb0;
+            border-radius: 20px;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #333;
+            position: absolute;
+            z-index: 2;
+
+            &:nth-child(1) {
+                bottom: 70px;
+                left: 10px;
+            }
+            &:nth-child(2) {
+                bottom: 180px;
+                left: 40px;
+            }
+            &:nth-child(3) {
+                bottom: 160px;
+                right: 10px;
+            }
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: relative;
+            bottom: 0;
+        }
+    }
+
+    .details {
+        
+    }
+
+
+}

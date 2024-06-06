@@ -135,3 +135,138 @@ html {
 .bwIcon {
   fill: var(--iconBg);
 }
+
+.landingContainer {
+  background: #fff;
+}
+.landingContainer > * {
+  color: #333;
+}
+.navbarContainer {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  background: #fff;
+  border-bottom: 1px solid #f3f3f3;
+  box-shadow: 0 0 20px #33333334;
+}
+.navbar {
+  color: #333;
+  width: 95%;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.heroSectionContainer {
+  padding-top: 80px;
+  padding-bottom: 100px;
+}
+
+.heroSection {
+  width: 95%;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+  min-height: 1200px;
+  height: auto;
+}
+
+.detail {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.detail h1 {
+  margin: 50px auto 10px auto;
+  font-size: 3.5rem;
+  line-height: 4rem;
+  text-align: center;
+  max-width: 800px;
+  width: 90%;
+  color: #fff;
+  text-shadow: #1a1a1a52 2px 2px 0;
+}
+.detail p {
+  text-align: center;
+  color: #fff;
+  font-size: 1.3rem;
+  max-width: 800px;
+  width: 90%;
+  text-shadow: #1a1a1a52 2px 0 0;
+}
+.detail button {
+  color: #fff;
+  background: rgb(0, 0, 0);
+  padding: 24px 48px;
+  border-radius: 10px;
+  margin: 20px 5px 60px 5px;
+}
+.heroSection .front__bg__image {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.heroSection .bg__image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  animation: expandInfinite 10s infinite ease-in-out;
+  z-index: 1;
+}
+
+.slider {
+  height: 350px;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.slider-items {
+  display: flex;
+  width: calc(350px * 12);
+  animation: scrolling 20s linear infinite;
+}
+
+.slide {
+  height: 350px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.slide img {
+  width: 90%;
+  height: auto;
+  position: absolute;
+  top: 0;
+}
+
+.slide:nth-child(odd) img {
+  top: 50px;
+}
+
+@keyframes scrolling {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(350px * -4));
+  }
+}

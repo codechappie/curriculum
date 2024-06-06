@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import style from './curriculum.module.scss';
+import sunnyTheme from './sunny.module.scss';
 import { ThemeSwitch } from '@/components/theme-switch';
 import AppContainer from '@/components/AppContainer';
 import Icon from '@/components/Icon';
@@ -8,7 +9,139 @@ import moment from 'moment';
 import { Skeleton } from '@nextui-org/react';
 import Link from 'next/link';
 
-const Curriculum = ({
+const Curriculum = (state) => {
+    console.log("ST", state)
+    switch (state.theme) {
+        case "basic":
+            return <CurriculumBasicTheme {...state} />
+        case "sunny":
+            return <CurriculumSunnyTheme {...state} />
+        default:
+            break;
+    }
+
+}
+
+
+const CurriculumSunnyTheme = ({
+    isLoading = false,
+    isMobile = false,
+    profileImage,
+    fullName,
+    occupation,
+    address,
+    email,
+    phoneNumber,
+    profileDescription,
+    socialNetworks,
+    academicEducation,
+    skills,
+    workExperiences,
+    certificates,
+    projects,
+    displaySections }) => {
+        console.log("OCUP: ", occupation)
+    return (
+        <div className={`${sunnyTheme.curriculumPage} ${isMobile && sunnyTheme.isMobile}`}>
+            <div className={sunnyTheme.curriculumPageContainer}>
+                <div className={sunnyTheme.presentation}>
+                    <div className={sunnyTheme.mainPhoto}>
+                        <span>Creative</span>
+                        <span>Fun</span>
+                        <span>Adaptive</span>
+                        <img src={profileImage} alt="" />
+                    </div>
+                </div>
+
+                <div className={sunnyTheme.moreDetails}>
+                    <div className={sunnyTheme.details}>
+                        👋🏽
+                        {occupation ? <h3>{occupation}</h3> : <Skeleton className="rounded-lg w-56 h-6 mt-1"></Skeleton>}
+                    </div>
+                </div>
+                {/* 
+                    <div className={sunnyTheme.experience}>
+                        <h2 className={sunnyTheme.subTitle}>Work experiences</h2>
+
+                        <div className={sunnyTheme.items}>
+                            {(workExperiences && workExperiences.length > 0) ? workExperiences.map((item) => (
+                                <div className={sunnyTheme.item} key={item.id}>
+                                    <div className={sunnyTheme.dot}></div>
+                                    <div className={sunnyTheme.content}>
+                                        <h2 className={sunnyTheme.title}>{item.title}</h2>
+                                        <h3 className={sunnyTheme.company}>{item.company}</h3>
+                                        <div className={sunnyTheme.date}>
+                                            From {moment(item.startDate).format("DD MMM YYYY")} to {moment(item.endDate).format("DD MMM YYYY")}
+                                        </div>
+                                        <p className={sunnyTheme.description}>
+                                            {item.shortDescription}
+                                        </p>
+                                    </div>
+                                </div>
+                            )) : [1, 2].map((item) => (
+                                <div className={sunnyTheme.item} key={item}>
+                                    <div className={sunnyTheme.dot}></div>
+                                    <div className={sunnyTheme.content}>
+                                        <h2 className={sunnyTheme.title}>
+                                            <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+                                        </h2>
+                                        <h3 className={sunnyTheme.company}>
+                                            <Skeleton className="rounded-lg w-8/12 h-6 mt-1"></Skeleton>
+                                        </h3>
+                                        <div className={sunnyTheme.date}>
+                                            <Skeleton className="rounded-lg w-1/3 h-6 mt-1"></Skeleton>
+                                        </div>
+                                        <div>
+                                            <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+                                            <Skeleton className="rounded-lg w-10/12 h-6 mt-1"></Skeleton>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            ))}
+                        </div>
+                    </div>
+                    {((displaySections && displaySections.certificates)) && <div className={sunnyTheme.certificates}>
+                        <h2 className={sunnyTheme.subTitle}>Certificates</h2>
+                        <div className={sunnyTheme.items}>
+                            {(certificates && certificates.length > 0) ? certificates.map((certificate) => (
+                                <div className={sunnyTheme.item} key={certificate.id}>
+                                    <h2 className={sunnyTheme.title}>
+                                        {certificate.title} ({moment(certificate.date).format("DD MMM YYYY")})
+                                    </h2>
+                                    <p>{certificate.description}</p>
+                                </div>
+                            )) : <CertificateSkeleton />}
+                        </div>
+                    </div>}
+                    {isLoading && <CertificateSkeleton />}
+
+
+                    {(displaySections && displaySections.projects) && <div className={sunnyTheme.projects}>
+                        <h2 className={sunnyTheme.subTitle}>Projects</h2>
+                        <div className={sunnyTheme.items}>
+                            {(projects && projects.length > 0) ? projects.map((project) => (
+                                <Link href={project.externalUrl} className={sunnyTheme.item} key={project.id}>
+                                    <div className={sunnyTheme.image}>
+                                        <img src={project.imageUrl} alt={project.name} />
+                                    </div>
+                                    <h3>{project.title}</h3>
+                                    <p>
+                                        {project.shortDescription}
+                                    </p>
+                                </Link>)) : <ProjectSkeleton type="simple" />}
+                        </div>
+                    </div>}
+                    {isLoading && <ProjectSkeleton type='filled' />}
+                </div> */}
+            </div>
+        </div >
+    )
+}
+
+
+
+const CurriculumBasicTheme = ({
     isLoading = false,
     isMobile = false,
     profileImage,
@@ -221,6 +354,7 @@ const Curriculum = ({
         </div >
     )
 }
+
 
 const CertificateSkeleton = () => {
     return <div className={style.certificates}>
