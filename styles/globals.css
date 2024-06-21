@@ -143,6 +143,11 @@ html {
 .landingContainer > * {
   color: #333;
 }
+.landingContainer .navbar .logo {
+  display: flex;
+  align-items: center;
+  
+}
 .navbarContainer {
   width: 100%;
   position: fixed;
@@ -163,9 +168,16 @@ html {
   justify-content: space-between;
 }
 
+.navbarContainer .navbar .signin {
+  color: #fff;
+  background: rgb(0, 0, 0);
+  padding: 8px 32px;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
 .heroSectionContainer {
-  padding-top: 80px;
+  padding-top: 100px;
   padding-bottom: 100px;
 }
 
@@ -177,7 +189,7 @@ html {
   padding: 20px;
   overflow: hidden;
   position: relative;
-  min-height: 1200px;
+  min-height: 1100px;
   height: auto;
 }
 
@@ -206,7 +218,7 @@ html {
   width: 90%;
   text-shadow: #1a1a1a52 2px 0 0;
 }
-.detail button {
+.detail a {
   color: #fff;
   background: rgb(0, 0, 0);
   padding: 24px 48px;

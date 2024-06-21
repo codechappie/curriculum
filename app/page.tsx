@@ -1,34 +1,30 @@
 "use client"
-import { Snippet } from "@nextui-org/react";
-import { Code } from "@nextui-org/code"
-import { button as buttonStyles } from "@nextui-org/theme";
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+import { Logo } from "@/components/icons";
 import Link from "next/link";
-import AppContainer from "@/components/AppContainer";
-import React, { useEffect, useRef, useState, FC } from "react";
-import Carousel from "../components/Carousel/Carousel"
+import Carousel from "../components/Carousel/Carousel";
 
 export default function Home() {
-	const DATA = [{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },
-	{ image: "https://assets-global.website-files.com/649d4a7f8fa7ad5b021ca3f3/64c104cdd04805c75a1ea5a8_Mobile.png" },]
+	const DATA = [{ image: "https://i.imgur.com/cmBkiD7.png" },
+	{ image: "https://i.imgur.com/9DnE33n.png" },
+	{ image: "https://i.imgur.com/cmBkiD7.png" },
+	{ image: "https://i.imgur.com/9DnE33n.png" },
+	{ image: "https://i.imgur.com/cmBkiD7.png" },
+	{ image: "https://i.imgur.com/9DnE33n.png" },
+	{ image: "https://i.imgur.com/cmBkiD7.png" },
+	{ image: "https://i.imgur.com/9DnE33n.png" },]
 	return (
 		<section className="landingContainer">
 			<div className="navbarContainer">
 				<div className="navbar">
-					<div className="logo">Kurro</div>
+					<div className="logo">
+						<Logo /> <p className="font-bold text-inherit">Curriculum</p>
+					</div>
 
-					<Link href="/login">
+					<Link className="signin" href="/login">
 						Sign in
 					</Link>
 				</div>
+
 			</div>
 			<div className="heroSectionContainer">
 				<div className="heroSection">
@@ -39,7 +35,7 @@ export default function Home() {
 					<div className="detail">
 						<h1>Craft a curriculum showcasing all that you do!</h1>
 						<p>Say goodbye to outdated resumes. Craft one that matches your personality and highlights your skills and experiences.</p>
-						<button>Let&quot;s get started</button>
+						<Link href="/login">Let&quot;s get started</Link>
 
 						<Carousel data={DATA} />
 					</div>

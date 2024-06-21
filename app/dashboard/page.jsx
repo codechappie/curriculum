@@ -56,7 +56,6 @@ const ProjectsInitialValue = {
   shortDescription: "",
 }
 
-const ThemeInitialValue = "";
 
 const Dashboard = () => {
   const session = useSession();
@@ -68,7 +67,6 @@ const Dashboard = () => {
   const [currentWorkExperiences, setCurrentWorkExperiences] = useState(WorkExperiencesInitialValue);
   const [currentCertificates, setCurrentCertificates] = useState(CertificatesInitialValue);
   const [currentProjects, setCurrentProjects] = useState(ProjectsInitialValue);
-  // const [currentTheme, setCurrentTheme] = useState(ThemeInitialValue);
   const [isLoading, setIsLoading] = useState(true);
   const [confetti, setConfetti] = useState();
 
@@ -108,7 +106,6 @@ const Dashboard = () => {
 
     if (user._id) {
       setGlobalState(user);
-      console.log("USER: ", user)
     }
   }, [user]);
 
@@ -162,8 +159,6 @@ const Dashboard = () => {
   }
 
   const saveGlobalChanges = () => {
-
-    console.log("GLB", globalState)
     axios.put(`/api/user/${user.id}`, globalState)
       .catch((error) => console.log(error));
 
@@ -188,7 +183,6 @@ const Dashboard = () => {
                     <AccordionItem key="1" aria-label="Basic Information" title="Basic Information">
                       <div className={styles.basicInformation}>
                         <div className={styles.userProfile}>
-                          {/* TODO: ADD IMAGE PUBLIC */}
                           <img src={globalState.profileImage || "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"} alt="" />
                           <Input
                             type="text"
