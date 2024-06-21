@@ -61,7 +61,7 @@ const ThemeInitialValue = "";
 const Dashboard = () => {
   const session = useSession();
   const [user, setUser] = useState({});
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["2"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
   const [currentSocialNetwork, setCurrentSocialNetwork] = useState(SNSInitialValue);
   const [currentAcademicEducation, setCurrentAcademicEducation] = useState(AcademicEducationInitialValue);
   const [currentSkill, setCurrentSkill] = useState(SkillInitialValue);

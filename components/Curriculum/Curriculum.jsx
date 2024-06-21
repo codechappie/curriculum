@@ -70,7 +70,7 @@ const CurriculumSunnyTheme = ({
 
 
                 <div className={sunnyTheme.moreDetails}>
-                    <div className={sunnyTheme.skills}>
+                    <div className={sunnyTheme.list}>
                         <h2 className={sunnyTheme.subTitle}>Skills</h2>
                         <ul className={sunnyTheme.items}>
                             {(skills && skills.length > 0 ? skills.map((skill) => (
@@ -78,6 +78,29 @@ const CurriculumSunnyTheme = ({
                                     <div className={sunnyTheme.dot}></div>
                                     <small>{skill.name}</small>
                                 </li>
+                            )) : [1, 2, 3, 4, 5, 6].map((index) => (
+                                <li className={sunnyTheme.item} key={index}>
+                                    <div className={sunnyTheme.dot}></div>
+                                    <Skeleton className="rounded-lg w-full h-6 mt-1"></Skeleton>
+                                </li>
+                            )))}
+                        </ul>
+                    </div>
+
+
+                    <div className={sunnyTheme.socialNetworks}>
+                        <h2 className={sunnyTheme.subTitle}>Social Networking Sites</h2>
+                        <ul className={sunnyTheme.items}>
+                            {(socialNetworks && socialNetworks.length > 0 ? socialNetworks.map((snsItem) => (
+                                <li className={sunnyTheme.items} key={snsItem.id}>
+                                    <a key={snsItem.id} href={snsItem.url}
+                                        target="_blank" rel="noreferrer" className={style.item} alt={snsItem.name} >
+                                        <Icon id={snsItem.iconid} />
+                                        <small>{snsItem.name}</small>
+                                    </a>
+                                </li>
+
+
                             )) : [1, 2, 3, 4, 5, 6].map((index) => (
                                 <li className={sunnyTheme.item} key={index}>
                                     <div className={sunnyTheme.dot}></div>
@@ -184,9 +207,10 @@ const CurriculumBasicTheme = ({
     workExperiences,
     certificates,
     projects,
-    displaySections }) => {
+    displaySections,
+    theme }) => {
     return (
-        <div className={`${style.curriculumPage} ${isMobile && style.isMobile}`}>
+        <div className={`${style.curriculumPage} ${style[theme]} ${isMobile && style.isMobile}`}>
             <div className={style.curriculumPageContainer}>
                 <div className={style.personalInformation}>
                     <div className={style.mainProfile}>

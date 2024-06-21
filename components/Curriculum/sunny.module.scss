@@ -95,12 +95,12 @@
     }
 
     .simpleDetails {
-        background: red;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         padding: 0 20px 0 50px;
+        overflow: hidden;
         .hand {
             font-size: 2.5rem;
         }
@@ -161,10 +161,69 @@
         background: linear-gradient(45deg, #fb9b7d 0%, #9b4f37 100%);
         padding: 30px;
 
-        .items {
-            list-style: disc;
-            margin-left: 20px;
-            color: #000;
+        .list {
+            margin-top: 30px;
+            &:first-child {
+                margin-top: 0;
+            }
+
+            .items {
+                list-style: none;
+                margin-left: 20px;
+                color: #000;
+
+                li {
+                    position: relative;
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                    &::after {
+                        content: "";
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: #000;
+                        position: absolute;
+                        top: 50%;
+                        left: -20px;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+
+        .socialNetworks {
+            margin-top: 30px;
+            .items {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-left: 10px;
+                color: #000;
+            }
+
+            li {
+                position: relative;
+
+                &::after {
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background: #000;
+                    position: absolute;
+                    top: 50%;
+                    left: -20px;
+                    transform: translateY(-50%);
+                }
+            }
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 10px;
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
         }
     }
 }
