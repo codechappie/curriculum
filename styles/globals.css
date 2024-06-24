@@ -146,7 +146,9 @@ html {
 .landingContainer .navbar .logo {
   display: flex;
   align-items: center;
-  
+}
+.landingContainer .navbar .logo p {
+  font-size: 1.4rem;
 }
 .navbarContainer {
   width: 100%;
@@ -281,5 +283,236 @@ html {
 
   100% {
     transform: translateX(calc(350px * -4));
+  }
+}
+
+.steps {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.steps h3 {
+  font-size: 3rem;
+  font-weight: 500px;
+  margin: 0 auto;
+  width: 85%;
+  max-width: 750px;
+  text-align: center;
+}
+.steps .description {
+  max-width: 800px;
+  width: 90%;
+  font-size: 1.4rem;
+  margin: 15px auto 40px auto;
+  text-align: center;
+}
+
+.steps .features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  padding-bottom: 140px;
+}
+
+.steps .features .item {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.steps .features .item h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.steps .features .item p {
+  font-size: 1.2rem;
+  font-weight: 500px;
+}
+
+.steps .features .item img {
+  width: 70px;
+  margin-bottom: 10px;
+}
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+}
+
+.faq h3 {
+  font-size: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.faq .item {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+.faq .item .question {
+  font-size: 1.6rem;
+  color: #3a2672;
+  font-weight: 600;
+}
+
+.faq .item .answer {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+}
+.joinus-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
+  margin: 0 25px;
+}
+
+.joinus {
+  background: rgb(0, 0, 0);
+  color: #fff;
+  min-height: 500px;
+  max-width: 1280px;
+  padding: 10px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 40px;
+}
+
+.joinus h3 {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.joinus p {
+  font-size: 2rem;
+  max-width: 700px;
+}
+
+.joinus a {
+  font-size: 1.2rem;
+  max-width: 700px;
+  background: #ffffff;
+  color: #333333;
+  padding: 10px 20px;
+  margin-top: 25px;
+  border-radius: 10px;
+  border: none;
+}
+
+.footer {
+  font-size: .9rem;
+  color: #000000;
+  padding: 40px 20px;
+  text-align: center;
+}
+.footer a {
+  color: rgb(0, 140, 255);
+  font-weight: 550;
+}
+
+@media screen and (max-width: 1080px) {
+  .steps .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .joinus {
+    min-height: 300px;
+  }
+
+  .joinus h3 {
+    font-size: 2.5rem;
+  }
+
+  .joinus p {
+    font-size: 1.5rem;
+  }
+  .joinus a {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .steps .features {
+    grid-template-columns: repeat(1, 1fr);
+    padding-bottom: 100px;
+  }
+  .steps .features .item {
+    max-width: 95%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .faq h3 {
+    font-size: 2.5rem;
+  }
+
+  .faq .item .question{
+    font-size: 1.3rem;
+  }
+
+  .faq .item .answer{
+    font-size: 1.1rem;
+  }
+
+  .steps .features .item img {
+    width: 80px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+
+  .faq {
+    padding-bottom: 20px;
+  }
+
+  .joinus-wrapper {
+    padding-bottom: 20px;
+  }
+
+  .joinus {
+    min-height: 250px;
+  }
+
+  .joinus h3 {
+    font-size: 2rem;
+  }
+
+  .joinus p {
+    font-size: 0.8rem;
+  }
+  .joinus a {
+    font-size: .8rem;
+  }
+}
+
+
+
+@media screen and (max-width: 768px) {
+
+
+  .joinus {
+    min-height: 250px;
+    padding: 10px 30px;
+    width: 100%;
+  }
+
+  .joinus h3 {
+    font-size: 1.6rem;
   }
 }
