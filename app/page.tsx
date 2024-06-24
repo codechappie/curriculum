@@ -132,7 +132,7 @@ export default function Home() {
 
 				<div className="item">
 					<h5 className="question">
-						4. What does "Your resume online" mean?
+						4. What does &quot;Your resume online&quot; mean?
 					</h5>
 					<p className="answer">
 						It means your resume will be available and accessible online for easy sharing and updating.
