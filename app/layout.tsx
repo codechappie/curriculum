@@ -10,11 +10,6 @@ const poppinsFont = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: {
-		default: siteConfig.name,
-		template: `%s - ${siteConfig.name}`,
-	},
-	description: siteConfig.description,
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "white" },
 		{ media: "(prefers-color-scheme: dark)", color: "black" },
@@ -24,13 +19,14 @@ export const metadata: Metadata = {
 		shortcut: "/favicon-16x16.png",
 		apple: "/apple-touch-icon.png",
 	},
-	viewport: { width: "device-width", initialScale: 1, maximumScale: 1, minimumScale: 1 }
+	viewport: { width: "device-width", initialScale: 1, maximumScale: 1, minimumScale: 1 },
 };
 
 export default function RootLayout({
 	children,
 }: {
-	children: React.ReactNode;
+	children: React.ReactNode,
+	metadata: Metadata
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning>

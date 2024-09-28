@@ -2,20 +2,23 @@
 import AppContainer from '@/components/AppContainer';
 import Curriculum from '@/components/Curriculum/Curriculum';
 import Icon from '@/components/Icon';
-import { DiscordIcon, GithubIcon, TwitterIcon } from '@/components/icons';
+import ThemesBox from '@/components/ThemeBox/ThemesBox';
+import { siteConfig } from '@/config/site';
 import {
   Accordion, AccordionItem, Button, Chip,
-  Divider, Input, Select, SelectItem, Switch, Textarea, Tabs, Tab, Card, CardBody
+  Divider, Input, Select, SelectItem, Switch,
+  Tab,
+  Tabs,
+  Textarea
 } from '@nextui-org/react';
-import ThemesBox from '@/components/ThemeBox/ThemesBox'
 import axios from 'axios';
+import JSConfetti from 'js-confetti';
 import { useSession } from "next-auth/react";
 import Link from 'next/link';
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from './dashboard.module.scss';
-import JSConfetti from 'js-confetti';
 
 const SNSInitialValue = {
   iconid: "",
@@ -168,8 +171,11 @@ const Dashboard = () => {
     });
   }
 
+
+
   return (
     <AppContainer isFooter={false} isLoading={isLoading}>
+      <title>{`Dashboard | ${siteConfig.name}`}</title>
       <div className={styles.dashboardPage}>
         <div className={styles.container}>
           <div className={styles.formContainer}>

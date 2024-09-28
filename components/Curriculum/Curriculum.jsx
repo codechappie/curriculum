@@ -8,6 +8,8 @@ import Icon from '@/components/Icon';
 import moment from 'moment';
 import { Skeleton, Spinner } from '@nextui-org/react';
 import Link from 'next/link';
+import Head from 'next/head';
+import { siteConfig } from '@/config/site';
 
 const Curriculum = (state) => {
     switch (state.theme) {
@@ -40,6 +42,8 @@ const CurriculumSunnyTheme = ({
     certificates,
     projects,
     displaySections, theme }) => {
+
+
     return (
         <div className={`${sunnyTheme.curriculumPage} ${sunnyTheme[theme]} ${isMobile && sunnyTheme.isMobile}`}>
             <div className={sunnyTheme.curriculumPageContainer}>

@@ -2,6 +2,7 @@
 import { Logo } from "@/components/icons";
 import Link from "next/link";
 import Carousel from "../components/Carousel/Carousel";
+import { siteConfig } from "@/config/site";
 
 export default function Home() {
 	const DATA = [{ image: "https://i.imgur.com/cmBkiD7.png" },
@@ -14,6 +15,7 @@ export default function Home() {
 	{ image: "https://i.imgur.com/9DnE33n.png" },]
 	return (
 		<section className="landingContainer">
+			<title>{siteConfig.largeName}</title>
 			<div className="navbarContainer">
 				<div className="navbar">
 					<div className="logo">
@@ -43,13 +45,13 @@ export default function Home() {
 			</div>
 
 			<div className="steps">
-				<h3>The Professional Resume Maker and CV Builder</h3>
-				<p className="description">VisualCV is everything you need to create an online resume and make your next career move.</p>
+				<h3>The Professional Resume Maker</h3>
+				<p className="description">Curriculum is everything you need to create an online resume and make your next career move.</p>
 
 				<div className="features">
 					<div className="item">
 						<img src="https://i.imgur.com/z4sHHcI.png" alt="" />
-						<h4>Register with your Gmail account</h4>
+						<h4>Register with your Gmail or your GitHub account</h4>
 						<p>
 							Complete the registration process by signing up with your Gmail account.
 						</p>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'
 import { Spinner } from '@nextui-org/react';
+import { siteConfig } from '@/config/site';
 
 const Page = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -45,8 +46,13 @@ const Page = () => {
     //     return <Spinner className='spinner' />
     // }
 
+    const newTitle = globalState.fullName ? `${globalState.fullName} | ${siteConfig.name}` : siteConfig.largeName;
+
     return (
-        <Curriculum isMobile={false} isLoading={isLoading} {...globalState} />
+        <>
+            <title>{newTitle}</title>
+            <Curriculum isMobile={false} isLoading={isLoading} {...globalState} />
+        </>
     )
 }
 

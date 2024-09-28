@@ -1,7 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "Next.js + NextUI",
+	name: "Curriculum",
+	largeName: "Curriculum | Craft one that match with you",
 	description: "Make beautiful websites regardless of your design experience.",
 	authNav: [
 		// {
