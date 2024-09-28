@@ -9,24 +9,12 @@ const poppinsFont = Poppins({
 	weight: ["400", "500", "600", "700"]
 });
 
-export const metadata: Metadata = {
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "white" },
-		{ media: "(prefers-color-scheme: dark)", color: "black" },
-	],
-	icons: {
-		icon: "/favicon.ico",
-		shortcut: "/favicon-16x16.png",
-		apple: "/apple-touch-icon.png",
-	},
-	viewport: { width: "device-width", initialScale: 1, maximumScale: 1, minimumScale: 1 },
-};
+
 
 export default function RootLayout({
 	children,
 }: {
-	children: React.ReactNode,
-	metadata: Metadata
+	children: React.ReactNode
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
