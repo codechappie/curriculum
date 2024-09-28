@@ -16,6 +16,7 @@ export default function Home() {
 	return (
 		<section className="landingContainer">
 			<title>{siteConfig.largeName}</title>
+			<meta name="description" content={siteConfig.description} />
 			<div className="navbarContainer">
 				<div className="navbar">
 					<div className="logo">
