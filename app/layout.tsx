@@ -1,7 +1,5 @@
-import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 import clsx from "clsx";
-import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Providers } from "./providers";
 const poppinsFont = Poppins({

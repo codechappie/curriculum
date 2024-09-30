@@ -24,6 +24,11 @@
 
         .formContainer {
             height: 90dvh;
+
+            @media screen and (max-width: 600px) {
+                height: 90dvh;
+            }
+
             .subtitle {
                 font-size: 1.3rem;
             }
@@ -31,12 +36,20 @@
                 margin: 10px 0;
                 overflow: hidden;
                 overflow-y: auto;
-                min-height: calc(90dvh - 114px);
-                max-height: calc(90dvh - 114px);
+                min-height: calc(90dvh - 120px);
+                max-height: calc(90dvh - 120px);
 
                 @media screen and (max-width: 900px) {
-                    max-height: calc(90dvh - 114px);
+                    max-height: calc(100% - 100px);
                 }
+
+                @media screen and (max-width: 600px) {
+                    max-height: calc(100dvh - 250px);
+                    min-height: calc(100dvh - 250px);
+                    overflow: auto;
+                    height: calc(100dvh - 250px);
+                }
+
                 .fullField {
                     grid-column: 1/3;
                 }
@@ -199,5 +212,4 @@
             }
         }
     }
-
 }

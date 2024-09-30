@@ -438,19 +438,27 @@ const Dashboard = () => {
                 className='w-full button'
                 target='_blank'
                 href={`/user/${user.username}`}
-              ><Button
-                className='w-full button lg:text-medium md:text-small sm:text-xs'
-                color='success'
               >
+                <Button color="success"
+                  fullWidth
+                  size='lg'
+                  variant="bordered"
+                  className='lg:text-md sm:text-sm xs:text-sm'
+                >
                   See preview
-                </Button></Link>
+                </Button>
+              </Link>
 
               <Button
-
-                className='w-full lg:text-medium md:text-small sm:text-xs'
-                color='primary'
+                fullWidth
+                size='lg'
+                color="primary"
+                variant="solid"
+                className='sm:text-sm xs:text-sm lg:text-md'
                 onClick={saveGlobalChanges}
-              >Save all changes</Button>
+              >
+                Save all changes
+              </Button>
             </div>
           </div>
           <div className={styles.previewContainer}>
